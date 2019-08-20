@@ -1,2 +1,6 @@
 import { combineReducers } from "redux";
-export const appReducers = combineReducers({ a: 1 });
+import test from './test'
+
+export const appReducers = combineReducers({
+    test
+});

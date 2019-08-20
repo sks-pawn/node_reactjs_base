@@ -1,5 +1,5 @@
-
 import Document, { Head, Main, NextScript, Html } from 'next/document'
+import Router from 'next/router'
 
 class MyDocument extends Document {
     static async getInitialProps(ctx) {
@@ -18,6 +18,8 @@ class MyDocument extends Document {
     }
 
     render() {
+        // <Route sensitive
+        //   render={props => <Redirect to={`${props.location.pathname.toLowerCase()}`} />} />
         return (
             <Html>
                 <Head />

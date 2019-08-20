@@ -1,0 +1,65 @@
+[
+    {
+        "key": "categories",
+        "title": "Categories",
+        "href": "/categories",
+        "icon": "ordered-list",
+        "color": "",
+        "background": "",
+        "active": true
+    },
+    {
+        "key": "recent",
+        "title": "Recent",
+        "href": "/recent",
+        "icon": "clock-circle",
+        "color": "",
+        "background": "",
+        "active": true
+    },
+    {
+        "key": "popular",
+        "title": "Popular",
+        "href": "/popular",
+        "icon": "fire",
+        "color": "",
+        "background": "",
+        "active": true
+    },
+    {
+        "key": "unread",
+        "title": "Unread",
+        "href": "/unread",
+        "icon": "file-search",
+        "color": "",
+        "background": "",
+        "active": true
+    },
+    {
+        "key": "tag",
+        "title": "Tag",
+        "href": "/tag",
+        "icon": "tags",
+        "color": "",
+        "background": "",
+        "active": true
+    },
+    {
+        "key": "groups",
+        "title": "Groups",
+        "href": "/groups",
+        "icon": "usergroup-add",
+        "color": "",
+        "background": "",
+        "active": true
+    },
+    {
+        "key": "search",
+        "title": "Search",
+        "href": "/search",
+        "icon": "search",
+        "color": "",
+        "background": "",
+        "active": true
+    }
+]
