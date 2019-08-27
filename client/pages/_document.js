@@ -1,5 +1,4 @@
 import Document, { Head, Main, NextScript, Html } from 'next/document'
-import Router from 'next/router'
 
 class MyDocument extends Document {
     static async getInitialProps(ctx) {
@@ -22,7 +21,9 @@ class MyDocument extends Document {
         //   render={props => <Redirect to={`${props.location.pathname.toLowerCase()}`} />} />
         return (
             <Html>
-                <Head />
+                <Head >
+                    <link rel="shortcut icon" type="image/png" href="/static/icons/icon.png" />
+                </Head>
                 <body>
                     <Main />
                     <NextScript />

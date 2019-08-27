@@ -1,9 +1,20 @@
 [
     {
+        "key": "blog",
+        "title": "Home Page",
+        "href": "/blog",
+        "icon": "",
+        "image": "/static/icons/icon.png",
+        "color": "",
+        "background": "",
+        "active": true
+    },
+    {
         "key": "categories",
         "title": "Categories",
-        "href": "/categories",
+        "href": "/blog/categories",
         "icon": "ordered-list",
+        "image": "",
         "color": "",
         "background": "",
         "active": true
@@ -11,8 +22,9 @@
     {
         "key": "recent",
         "title": "Recent",
-        "href": "/recent",
+        "href": "/blog/recent",
         "icon": "clock-circle",
+        "image": "",
         "color": "",
         "background": "",
         "active": true
@@ -20,8 +32,9 @@
     {
         "key": "popular",
         "title": "Popular",
-        "href": "/popular",
+        "href": "/blog/popular",
         "icon": "fire",
+        "image": "",
         "color": "",
         "background": "",
         "active": true
@@ -29,8 +42,9 @@
     {
         "key": "unread",
         "title": "Unread",
-        "href": "/unread",
+        "href": "/blog/unread",
         "icon": "file-search",
+        "image": "",
         "color": "",
         "background": "",
         "active": true
@@ -38,8 +52,9 @@
     {
         "key": "tag",
         "title": "Tag",
-        "href": "/tag",
+        "href": "/blog/tag",
         "icon": "tags",
+        "image": "",
         "color": "",
         "background": "",
         "active": true
@@ -47,8 +62,9 @@
     {
         "key": "groups",
         "title": "Groups",
-        "href": "/groups",
+        "href": "/blog/groups",
         "icon": "usergroup-add",
+        "image": "",
         "color": "",
         "background": "",
         "active": true
@@ -56,8 +72,9 @@
     {
         "key": "search",
         "title": "Search",
-        "href": "/search",
+        "href": "/blog/search",
         "icon": "search",
+        "image": "",
         "color": "",
         "background": "",
         "active": true
