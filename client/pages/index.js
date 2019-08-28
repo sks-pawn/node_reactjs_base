@@ -1,8 +1,8 @@
 import React from 'react'
 import Link from 'next/link'
 import Head from 'next/head'
-import cards from '../static/data/js/cards'
-import '../static/css/index.css'
+import cards from '../data/js/cards'
+import '../static/css/blog/layout.css'
 
 const cardRow = cards.map(e => {
   return <Link key={e.key} href={e.href}>
@@ -13,17 +13,16 @@ const cardRow = cards.map(e => {
   </Link>
 })
 
-const Home = () => (
+const MyPage = () => (
   <div>
     <Head>
-      <title>Home</title>
+      <title>MyPage</title>
     </Head>
     <div className='hero'>
       <h1 className='title'>Welcome to Next.js!</h1>
       <p className='description'>
         To get started, edit <code>pages/index.js</code> and save to reload.
       </p>
-
       <div className='row'>
         {cardRow}
       </div>
@@ -31,4 +30,4 @@ const Home = () => (
   </div>
 )
 
-export default Home
+export default MyPage

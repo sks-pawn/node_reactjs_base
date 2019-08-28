@@ -1,28 +1,26 @@
 import React, { Component } from 'react'
 import Link from 'next/link'
-import { Menu, Icon, Avatar } from 'antd';
-import navJson from '../../../static/data/json/nav.json'
+import { Menu, Icon, Avatar, Tooltip } from 'antd';
+import navJson from '../../../data/json/nav.json'
 import Router from 'next/router'
 
 const navigation = navJson.map(element => {
-  if (element.image) {
-    return <Menu.Item key={element.key}>
-      <Link href={element.href}>
-        <a>
-          <Avatar src={element.image} size="large" />
-          <span><b>{element.title}</b></span>
-        </a>
-      </Link>
-    </Menu.Item>
-  }
+  let item = element.image ? (<a>
+    <Avatar src={element.image} size="large" />
+    <span><b>
+      {element.title}
+    </b></span></a>) : <a><Icon type={element.icon} /></a>
+
   return <Menu.Item key={element.key}>
     <Link href={element.href}>
-      <a><Icon type={element.icon} /></a>
+      <Tooltip placement="bottom" title={element.title}>
+        {item}
+      </Tooltip>
     </Link>
   </Menu.Item>
 })
 
-class Nav extends Component {
+class MyComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -54,4 +52,4 @@ class Nav extends Component {
 }
 
 
-export default Nav
+export default MyComponent

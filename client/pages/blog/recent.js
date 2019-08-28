@@ -1,17 +1,15 @@
 import React from 'react'
 import Head from 'next/head'
-import Nav from '../../components/blog/layout/Nav'
-const Recent = () => (
-  <div>
+import MyLayout from '../../components/blog/layout/index'
+const MyPage = () => (
+  <MyLayout>
     <Head>
       <title>Recent</title>
     </Head>
-    <Nav />
-
     <div className='hero'>
       <h1 className='title'>Recent!</h1>
     </div>
-  </div>
+  </MyLayout>
 )
 
-export default Recent
+export default MyPage

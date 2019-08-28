@@ -1,17 +1,15 @@
 import React from 'react'
 import Head from 'next/head'
-import Nav from '../../components/blog/layout/Nav'
-const Search = () => (
-  <div>
+import MyLayout from '../../components/blog/layout/index'
+const MyPage = () => (
+  <MyLayout>
     <Head>
       <title>Search</title>
     </Head>
-    <Nav />
-
     <div className='hero'>
       <h1 className='title'>Search!</h1>
     </div>
-  </div>
+  </MyLayout>
 )
 
-export default Search
+export default MyPage

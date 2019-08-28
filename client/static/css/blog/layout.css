@@ -52,3 +52,12 @@
     font-size: 13px;
     color: #333;
 }
+
+.layout {
+    margin-left: 200px;
+    margin-right: 200px;
+}
+
+.content {
+    overflow: 'initial'
+}
