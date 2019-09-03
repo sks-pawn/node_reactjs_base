@@ -27,7 +27,7 @@ class MyApp extends App {
     return (
       <Container>
         <NextNprogress
-          color="#29D"
+          color="#86ba4b"
           startPosition={10}
           stopDelayMs={200}
           height={3}
