@@ -1,5 +1,5 @@
 // import React from 'react'
-// import MyLayout from '../components/MyLayout'
+// import MyLayout from '~/components/MyLayout'
 // import marked from 'marked'
 // // import Highlight from 'react-highlight'
 // import dynamic from 'next/dynamic'

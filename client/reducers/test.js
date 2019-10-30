@@ -1,4 +1,4 @@
-import * as TYPES from '../constants/ActionType'
+import * as TYPES from '~/constants/ActionType'
 const initialState = []
 
 export default (state = initialState, { type, data }) => {

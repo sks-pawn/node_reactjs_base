@@ -1,10 +1,10 @@
-const listTypes = [
+const actions = [
     'TICK',
     'INCREMENT',
     'DECREMENT',
     'RESET'
 ]
 
-listTypes.forEach(element => {
+actions.forEach(element => {
     exports[element] = element
 })

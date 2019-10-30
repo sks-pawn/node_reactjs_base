@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Comment, Avatar } from 'antd';
 import Link from 'next/link'
-import '../../../static/css/blog/categorie.css'
+import '~/static/css/blog/categorie.css'
 
 class MyComponent extends Component {
   render() {

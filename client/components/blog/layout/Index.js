@@ -2,7 +2,7 @@ import { Layout } from 'antd';
 import MyHeader from './Header'
 import MyFooter from './Footer'
 const { Content } = Layout;
-import '../../../static/css/blog/layout.css'
+import '~/static/css/blog/layout.css'
 
 const MyLayout = (props) => (
     <Layout className="layout">

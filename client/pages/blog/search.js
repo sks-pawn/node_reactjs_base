@@ -1,6 +1,6 @@
 import React from 'react'
 import Head from 'next/head'
-import MyLayout from '../../components/blog/layout/index'
+import MyLayout from '~/components/blog/layout/index'
 const MyPage = () => (
   <MyLayout>
     <Head>

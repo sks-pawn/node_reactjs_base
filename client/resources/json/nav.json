@@ -4,7 +4,7 @@
         "title": "Home Page",
         "href": "/blog",
         "icon": "",
-        "image": "/static/icons/icon.png",
+        "avatar": "/static/icons/icon.png",
         "color": "",
         "background": "",
         "active": true
@@ -14,7 +14,7 @@
         "title": "Categories",
         "href": "/blog/categories",
         "icon": "ordered-list",
-        "image": "",
+        "avatar": "",
         "color": "",
         "background": "",
         "active": true
@@ -24,7 +24,7 @@
         "title": "Recent",
         "href": "/blog/recent",
         "icon": "clock-circle",
-        "image": "",
+        "avatar": "",
         "color": "",
         "background": "",
         "active": true
@@ -34,7 +34,7 @@
         "title": "Popular",
         "href": "/blog/popular",
         "icon": "fire",
-        "image": "",
+        "avatar": "",
         "color": "",
         "background": "",
         "active": true
@@ -44,7 +44,7 @@
         "title": "Unread",
         "href": "/blog/unread",
         "icon": "file-search",
-        "image": "",
+        "avatar": "",
         "color": "",
         "background": "",
         "active": true
@@ -54,7 +54,7 @@
         "title": "Tag",
         "href": "/blog/tag",
         "icon": "tags",
-        "image": "",
+        "avatar": "",
         "color": "",
         "background": "",
         "active": true
@@ -64,7 +64,7 @@
         "title": "Groups",
         "href": "/blog/groups",
         "icon": "usergroup-add",
-        "image": "",
+        "avatar": "",
         "color": "",
         "background": "",
         "active": true
@@ -74,7 +74,7 @@
         "title": "Search",
         "href": "/blog/search",
         "icon": "search",
-        "image": "",
+        "avatar": "",
         "color": "",
         "background": "",
         "active": true

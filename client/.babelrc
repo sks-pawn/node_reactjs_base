@@ -9,6 +9,19 @@
                 "libraryName": "antd",
                 "style": "css"
             }
+        ],
+        [
+            "babel-plugin-root-import",
+            {
+                "compilerOptions": {
+                    "baseUrl": ".",
+                    "paths": {
+                        "~/*": [
+                            "src/*"
+                        ]
+                    }
+                }
+            }
         ]
     ]
 }

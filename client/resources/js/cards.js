@@ -1,4 +1,4 @@
-import { getRandomString } from '../../constants/Random'
+import { getRandomString } from '~/helpers/HandleString'
 
 export default [
     {

@@ -1,8 +1,8 @@
 import React from 'react'
 import Link from 'next/link'
 import Head from 'next/head'
-import cards from '../data/js/cards'
-import '../static/css/blog/layout.css'
+import cards from '~/resources/js/cards'
+import '~/static/css/blog/layout.css'
 
 const cardRow = cards.map(e => {
   return <Link key={e.key} href={e.href}>

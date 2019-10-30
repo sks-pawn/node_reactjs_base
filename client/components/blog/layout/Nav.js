@@ -1,23 +1,25 @@
 import React, { Component } from 'react'
 import Link from 'next/link'
 import { Menu, Icon, Avatar, Tooltip } from 'antd';
-import navJson from '../../../data/json/nav.json'
+import navJson from '~/resources/json/nav.json'
 import Router from 'next/router'
 
 const navigation = navJson.map(element => {
-  let item = element.image ? (<a>
-    <Avatar src={element.image} size="large" />
-    <span><b>
-      {element.title}
-    </b></span></a>) : <a><Icon type={element.icon} /></a>
-
-  return <Menu.Item key={element.key}>
-    <Link href={element.href}>
-      <Tooltip placement="bottom" title={element.title}>
-        {item}
-      </Tooltip>
-    </Link>
-  </Menu.Item>
+  if (element.active) {
+    let item = element.avatar ? (<a>
+      <Avatar src={element.avatar} size="large" />
+      <span><b>
+        {element.title}
+      </b></span>
+    </a>) : <a><Icon type={element.icon} /></a>
+    return <Menu.Item key={element.key}>
+      <Link href={element.href}>
+        <Tooltip placement="bottom" title={element.title}>
+          {item}
+        </Tooltip>
+      </Link>
+    </Menu.Item>
+  }
 })
 
 class MyComponent extends Component {

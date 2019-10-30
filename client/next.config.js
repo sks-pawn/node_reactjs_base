@@ -17,6 +17,15 @@ const nextConfig = {
             new webpack.EnvironmentPlugin(localEnv)
         )
         return config
+    },
+    env: {
+        'KEY_APP': 'sweet',
+        'SERVER_DEV_PROTOCOL': 'http',
+        'SERVER_DEV_HOST': 'localhost',
+        'SERVER_DEV_PORT': '8080',
+        'SERVER_PRODUCT_PROTOCOL': 'http',
+        'SERVER_PRODUCT_HOST': 'localhost',
+        'SERVER_PRODUCT_PORT': '8080'
     }
 };
 
