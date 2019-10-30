@@ -5,8 +5,8 @@ const baseHeaders = {
     'X-Custom-Header': 'foobar'
 }
 export default (endPoint, payload = {}, method = 'get', headers = {}) => {
-    const URL = process.env.NODE_ENV == 'development' ?
-        `http://stockboard.sbsc.com.vn/HO.ashx?FileName=6959&_t=1572421593714` :
+    const URL = process.env.NODE_ENV === 'development' ?
+        `${process.env.SERVER_DEV_PROTOCOL}://${process.env.SERVER_DEV_HOST}:${process.env.SERVER_DEV_PORT}` :
         `${process.env.SERVER_PRODUCT_PROTOCOL}://${process.env.SERVER_PRODUCT_HOST}:${process.env.SERVER_PRODUCT_PORT}`;
     var accessToken = 'AccessToken';
     let clientId = 'ClientId';
