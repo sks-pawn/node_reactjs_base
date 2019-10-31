@@ -4,11 +4,21 @@ import _ from 'lodash';
 const baseHeaders = {
     'X-Custom-Header': 'foobar'
 }
+
+const config = process.env.NODE_ENV === 'development' ? {
+    protocol: process.env.SERVER_DEV_PROTOCOL,
+    host: process.env.SERVER_DEV_HOST,
+    port: process.env.SERVER_DEV_PORT
+} : {
+        protocol: process.env.SERVER_PRODUCT_PROTOCOL,
+        host: process.env.SERVER_PRODUCT_HOST,
+        port: process.env.SERVER_PRODUCT_PORT
+    }
+
+const URL = `${config.protocol}://${config.host}:${config.port}`
+
 export default (endPoint, payload = {}, method = 'get', headers = {}) => {
-    const URL = process.env.NODE_ENV === 'development' ?
-        `${process.env.SERVER_DEV_PROTOCOL}://${process.env.SERVER_DEV_HOST}:${process.env.SERVER_DEV_PORT}` :
-        `${process.env.SERVER_PRODUCT_PROTOCOL}://${process.env.SERVER_PRODUCT_HOST}:${process.env.SERVER_PRODUCT_PORT}`;
-    var accessToken = 'AccessToken';
+    let accessToken = 'AccessToken';
     let clientId = 'ClientId';
     return axios({
         method: method.toLowerCase(),

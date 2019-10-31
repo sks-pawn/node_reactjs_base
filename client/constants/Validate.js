@@ -1,5 +1,5 @@
 
-module.exports = {
+export default {
     "VALIDATE_REQUIRED": "This field is required",
     "VALIDATE_REMOTE": "Please fix this field",
     "VALIDATE_EMAIL": "Please enter a valid email address",

@@ -4,6 +4,7 @@ import Head from 'next/head'
 import cards from '~/resources/js/cards'
 import '~/static/css/blog/layout.css'
 
+
 const cardRow = cards.map(e => {
   return <Link key={e.key} href={e.href}>
     <a className='card'>

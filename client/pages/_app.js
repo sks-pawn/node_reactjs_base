@@ -2,7 +2,7 @@ import React from "react";
 import App, { Container } from "next/app";
 import { createStore, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { appReducers } from "~/reducers";
+import appReducers from "~/reducers";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import NextNprogress from 'nextjs-progressbar';

@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { PageHeader } from 'antd';
 import MyLayout from '~/components/blog/layout/index'
 import Categorie from '~/components/blog/shared/Categorie'
-import Api from '~/ultils/api'
 
 class MyPage extends Component {
   render() {
