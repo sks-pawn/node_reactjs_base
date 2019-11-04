@@ -2,8 +2,13 @@ import React, { Component } from 'react'
 import { PageHeader } from 'antd';
 import MyLayout from '~/components/blog/layout/index'
 import Categorie from '~/components/blog/shared/Categorie'
+import Api from '~/ultils/apiCaller'
 
 class MyPage extends Component {
+  async componentDidMount() {
+    var a = await Api.get();
+    console.log(a)
+  }
   render() {
     return (
       <MyLayout>

@@ -17,17 +17,18 @@ const config = process.env.NODE_ENV === 'development' ? {
 
 const URL = `${config.protocol}://${config.host}:${config.port}`
 
-export default (endPoint, payload = {}, method = 'get', headers = {}) => {
+export default (endPoint, payload = {}, method = 'get', headers = {}, fomats = 'json') => {
     let accessToken = 'AccessToken';
     let clientId = 'ClientId';
+    fomats = endPoint ? '.' + fomats : '/.' + fomats;
     return axios({
         method: method.toLowerCase(),
         data: payload,
-        baseURL: [URL, endPoint].join(''),
+        baseURL: [URL, endPoint, fomats].join(''),
         timeout: 30000,
         headers: _.pickBy({
             ...(accessToken ? {
-                'Authorization': process.env.KEY_APP + "-" + accessToken,
+                'Authorization': process.env.APP_KEY + "-" + accessToken,
             } : {
                     'Client-ID': clientId,
                 }),
