@@ -6,7 +6,7 @@ import Api from '~/ultils/apiCaller'
 
 class MyPage extends Component {
   async componentDidMount() {
-    var a = await Api.get();
+    var a = await Api.get("/admin/users");
     console.log(a)
   }
   render() {

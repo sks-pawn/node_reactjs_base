@@ -15,12 +15,18 @@
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
-Route.get('/', ({ }) => {
-  return { greeting: 'Hello world in JSON' }
-}).formats(['json'], true)
 
-// Route.resource('users', () => { return { greeting: 'Hello world in JSON' } })
-//   // .only(['index', 'show'])
-//   // .middleware(new Map([
-//   //   [['store', 'update', 'destroy'], ['auth']]]))
-//   .formats(['json'], true)
+Route.get('/', ({ request, session }) => {
+  return { greeting: 'Hello world in JSON' }
+}).middleware(['country:convertEmptyData'])
+  .formats(['json'], true)
+
+Route.group(() => {
+  Route.resource('users', 'Admin/UserController')
+    .apiOnly()
+    .validator(new Map([
+      [['admin/users.store'], ['StoreUser']]
+    ]))
+}).prefix('admin/')
+  .middleware(['country:convertEmptyData'])
+  .formats(['json'], true)
