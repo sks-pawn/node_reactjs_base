@@ -6,8 +6,20 @@ import Api from '~/ultils/apiCaller'
 
 class MyPage extends Component {
   async componentDidMount() {
-    var a = await Api.get("/admin/users");
-    console.log(a)
+    try {
+      let result = await Api.post("/admin/users", {
+        "email": "anhthanh1996vp@gmail.com",
+        "password": "ass"
+      });
+      if (result && result.data) {
+        console.log(result.data)
+      }
+    } catch (error) {
+      if (error && error.data) {
+        console.log(error.data)
+      }
+    }
+
   }
   render() {
     return (

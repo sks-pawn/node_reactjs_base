@@ -16,16 +16,18 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-Route.get('/', ({ request, session }) => {
+Route.get('/', () => {
   return { greeting: 'Hello world in JSON' }
-}).middleware(['country:convertEmptyData'])
+})
+  .middleware(['country:convertEmptyData'])
   .formats(['json'], true)
+
 
 Route.group(() => {
   Route.resource('users', 'Admin/UserController')
     .apiOnly()
     .validator(new Map([
-      [['admin/users.store'], ['StoreUser']]
+      [['users.store'], ['StoreUser']]
     ]))
 }).prefix('admin/')
   .middleware(['country:convertEmptyData'])

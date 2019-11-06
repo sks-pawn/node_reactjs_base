@@ -3,6 +3,7 @@ export default {
     "VALIDATE_REQUIRED": "This field is required",
     "VALIDATE_REMOTE": "Please fix this field",
     "VALIDATE_EMAIL": "Please enter a valid email address",
+    "VALIDATE_EMAIL_UNIQUE": "This email is already registered",
     "VALIDATE_URL": "Please enter a valid URL",
     "VALIDATE_DATE": "Please enter a valid date",
     "VALIDATE_DATE_ISO": "Please enter a valid date ( ISO )",

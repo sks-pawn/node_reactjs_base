@@ -2,7 +2,7 @@ import axios from 'axios';
 import _ from 'lodash';
 
 const baseHeaders = {
-    'X-Custom-Header': 'foobar'
+    'Accept': 'application/json'
 }
 
 const config = process.env.NODE_ENV === 'development' ? {
@@ -36,14 +36,7 @@ export default (endPoint, payload = {}, method = 'get', headers = {}, fomats = '
             ...headers,
         }, item => !_.isEmpty(item))
     }).catch((e) => {
-        // if (e.response && e.response.json) {
-        //     e.response.json().then((json) => {
-        //         if (json) throw json;
-        //         throw e;
-        //     });
-        // } else {
-        //     throw e;
-        // }
+        if (e.response) throw e.response;
         throw e;
     })
 };

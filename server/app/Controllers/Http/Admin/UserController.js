@@ -47,7 +47,8 @@ class UserController {
    */
   async store({ request, response }) {
     const body = request.post()
-    console.log(body)
+    console.log('body :', body);
+    return body;
   }
 
   /**
