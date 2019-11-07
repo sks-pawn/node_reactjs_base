@@ -10,6 +10,7 @@
 | provider here.
 |
 */
+const path = require('path')
 const providers = [
   '@adonisjs/framework/providers/AppProvider',
   '@adonisjs/auth/providers/AuthProvider',
@@ -18,9 +19,9 @@ const providers = [
   '@adonisjs/lucid/providers/LucidProvider',
   // '@adonisjs/shield/providers/ShieldProvider',
   '@adonisjs/session/providers/SessionProvider',
-  '@adonisjs/validator/providers/ValidatorProvider'
+  '@adonisjs/validator/providers/ValidatorProvider',
+  path.join(__dirname, '..', 'providers', 'CustomLogger')
 ]
-
 /*
 |--------------------------------------------------------------------------
 | Ace Providers

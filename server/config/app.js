@@ -41,7 +41,7 @@ module.exports = {
     | below value to true.
     |
     */
-    allowMethodSpoofing: true,
+    allowMethodSpoofing: false,
 
     /*
     |--------------------------------------------------------------------------
@@ -200,7 +200,7 @@ module.exports = {
     |
     */
     console: {
-      driver: 'console',
+      driver: 'custom',
       name: 'adonis-app',
       level: 'info'
     },
@@ -220,7 +220,9 @@ module.exports = {
       driver: 'file',
       name: 'adonis-app',
       filename: 'adonis.log',
-      level: 'info'
+      level: 'info',
+      timestamp: new Date().toLocaleString(),
+      type: 'file'
     }
   },
 

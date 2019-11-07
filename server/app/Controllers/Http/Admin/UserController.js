@@ -60,8 +60,13 @@ class UserController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({ params, request, response, view }) {
+  async show({ auth, params, request, response, view }) {
     const { id } = params;
+    console.log(auth.user)
+    if (auth.user.id !== Number(id)) {
+      return "You cannot see someone else's profile"
+    }
+    return auth.user
   }
 
   /**
@@ -99,6 +104,13 @@ class UserController {
    */
   async destroy({ params, request, response }) {
     const { id } = params;
+  }
+
+  async login({ auth, request }) {
+    const { email, password } = request.post()
+    // await auth.attempt(email, password)
+
+    return 'Logged in successfully'
   }
 }
 

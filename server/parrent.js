@@ -38,3 +38,16 @@ if (validation.fails()) {
 }
 
 return 'Validation passed'
+
+//log
+
+Logger.info("message.....")
+Logger.transport('file').info(new Date().toLocaleString() + " :: " + "message...")
+
+//dowload file
+
+const Helpers = use('Helpers')
+Route.get('download/:fileId', async ({ params, response }) => {
+    const file = await Files.findorFail(params.fileId)
+    response.download(Helpers.tmpPath('uploads/${file.path}'))
+})
