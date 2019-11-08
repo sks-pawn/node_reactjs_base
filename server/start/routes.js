@@ -19,9 +19,6 @@ const Route = use('Route')
 Route.get('/', () => {
   return "<h1>HELLO ADONIS SERVER</h1>"
 })
-  .middleware(['country:convertEmptyData'])
-  .formats(['json'], true)
-
 
 Route.group(() => {
   Route.resource('users', 'Admin/UserController')
@@ -36,7 +33,7 @@ Route.group(() => {
   Route.post('login', 'Admin/UserController.login')
     .middleware('guest')
 }).prefix('admin/')
-  .middleware(['country:convertEmptyData:auth'])
+  .middleware(['country:convertEmptyData'])
   .formats(['json'], true)
 
 
