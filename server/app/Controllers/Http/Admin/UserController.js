@@ -18,9 +18,10 @@ class UserController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index({ request, response, view, session }) {
+  async index({ request, response, session }) {
+    var cartTotal = request.cookie('cartTotal')
     response
-      .cookie('cartTotal', 20)
+      .cookie('cartTotal', 50)
     response
       .status(Status.Created)
       .json({ greeting: 'Hello world in JSON' })
@@ -48,7 +49,7 @@ class UserController {
    */
   async store({ request, response }) {
     const body = request.post()
-    console.log('body :', body);
+    // console.log('body :', body);
     return body;
   }
 
@@ -61,13 +62,23 @@ class UserController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({ auth, params, request, response, view }) {
-    const { id } = params;
-    console.log(auth.user)
-    if (auth.user.id !== Number(id)) {
-      return "You cannot see someone else's profile"
+  async show({ auth, params, request, response, view, session }) {
+    try {
+      console.log('auth.user :', auth.user);
+      return 'a'
+      // const { email, password } = { 'email': 'admin@gmail.com', 'password': '123123' }
+      // await auth.attempt(email, password)
+      // return await auth.getUser()
+    } catch (error) {
+      throw error
     }
-    return auth.user
+    // console.log('session :', session.all());
+    // const { id } = params;
+    // console.log('auth.user :', auth.user.id);
+    // if (auth.user.id !== Number(id)) {
+    //   return "You cannot see someone else's profile"
+    // }
+    // return auth.user
   }
 
   /**
@@ -90,7 +101,7 @@ class UserController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update({ params, request, response }) {
+  async update({ params, request, response, auth }) {
     const { id } = params;
     const body = request.post()
   }
@@ -107,14 +118,12 @@ class UserController {
     const { id } = params;
   }
 
-  async login({ auth, request }) {
+  async login({ auth, request, session }) {
     try {
       const { email, password } = request.post()
-      await auth.attempt(email, password)
-      // await auth.check()
-      return 'Logged in successfully'
+      return await auth.attempt(email, password)
     } catch (error) {
-      LoggerPermanent(error, request)
+      LoggerPermanent(error, request, request.post())
       throw error
     }
   }

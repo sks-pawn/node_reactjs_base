@@ -28,7 +28,8 @@ export default (endPoint, payload = {}, method = 'get', headers = {}, fomats = '
         timeout: 30000,
         headers: _.pickBy({
             ...(accessToken ? {
-                'Authorization': process.env.APP_KEY + "-" + accessToken,
+                // 'Authorization': process.env.APP_KEY + "-" + accessToken,
+                Authorization : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU3MzQ2OTkyNCwibmJmIjoxNTczNTA1OTI0LCJleHAiOjE1NzM2NDI3MjR9.ZfPn5J4f45Q4xB3jP9g9EFA4CtKUvOwNPRvfqJHDQn8"
             } : {
                     'Client-ID': clientId,
                 }),

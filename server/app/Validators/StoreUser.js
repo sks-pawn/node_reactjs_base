@@ -17,7 +17,7 @@ class StoreUser {
   get rules() {
     return {
       // validation rules
-      email: 'required|email',
+      email: 'required|email|notExists:users,email',
       password: 'required'
     }
   }

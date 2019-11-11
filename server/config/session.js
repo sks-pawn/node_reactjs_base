@@ -36,7 +36,7 @@ module.exports = {
   | removed when browser closes.
   |
   */
-  clearWithBrowser: true,
+  clearWithBrowser: false,
 
   /*
   |--------------------------------------------------------------------------
@@ -65,7 +65,7 @@ module.exports = {
   cookie: {
     httpOnly: true,
     path: '/',
-    sameSite: true
+    sameSite: false
   },
 
   /*

@@ -31,7 +31,7 @@ Route.group(() => {
     ]))
 
   Route.post('login', 'Admin/UserController.login')
-    .middleware('guest')
+  .middleware('guest')
 }).prefix('admin/')
   .middleware(['country:convertEmptyData'])
   .formats(['json'], true)

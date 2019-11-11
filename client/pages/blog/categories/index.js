@@ -7,7 +7,7 @@ import Api from '~/ultils/apiCaller'
 class MyPage extends Component {
   async componentDidMount() {
     try {
-      let result = await Api.post("/admin/users", {
+      let result = await Api.get("/admin/users/1", {
         "email": "anhthanh1996vp@gmail.com",
         "password": "ass"
       });
