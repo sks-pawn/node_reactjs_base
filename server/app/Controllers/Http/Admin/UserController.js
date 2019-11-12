@@ -5,6 +5,7 @@
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 const Status = use('App/Constants/Status')
 const { LoggerPermanent } = use('App/Helpers/Loggers')
+const User = use('App/Models/User')
 /**
  * Resourceful controller for interacting with users
  */
@@ -64,8 +65,8 @@ class UserController {
    */
   async show({ auth, params, request, response, view, session }) {
     try {
-      console.log('auth.user :', auth.user);
-      return 'a'
+      return await auth.listTokens()
+
       // const { email, password } = { 'email': 'admin@gmail.com', 'password': '123123' }
       // await auth.attempt(email, password)
       // return await auth.getUser()
@@ -118,10 +119,16 @@ class UserController {
     const { id } = params;
   }
 
-  async login({ auth, request, session }) {
+  async login({ auth, request, response, session }) {
     try {
+
       const { email, password } = request.post()
-      return await auth.attempt(email, password)
+      var b = await auth.withRefreshToken().attempt(email, password)
+      return await auth.newRefreshToken().generateForRefreshToken(b.refreshToken)
+      // const user = await User.find(3)
+      // return await auth.generate(user, true)
+      // return auth.user
+
     } catch (error) {
       LoggerPermanent(error, request, request.post())
       throw error
