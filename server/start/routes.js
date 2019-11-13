@@ -24,14 +24,18 @@ Route.group(() => {
   Route.resource('users', 'Admin/UserController')
     .apiOnly()
     .validator(new Map([
-      [['store'], ['StoreUser']]
+      [['store'], ['UserStore']],
+      [['show, '], ['ParamIsNumber']],
+      [['update'], ['ParamIsNumber']],
+      [['destroy'], ['ParamIsNumber']]
     ]))
     .middleware(new Map([
-      [['show'], ['auth']]
+      [['show', 'store'], ['auth']],
+      // [['store'], ['auth']]
     ]))
 
   Route.post('login', 'Admin/UserController.login')
-  .middleware('guest')
+  // .middleware('guest:jwt')
 }).prefix('admin/')
   .middleware(['country:convertEmptyData'])
   .formats(['json'], true)

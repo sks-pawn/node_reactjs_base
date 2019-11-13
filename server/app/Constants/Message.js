@@ -27,6 +27,7 @@ module.exports = {
     "BML_TERMS": "I have read and agree to the terms above",
     "BML_TERMS_ERROR": "You must agree to the terms and conditions",
     "PROFILE_FIRSTNAME": "First Name",
+    "PROFILE_SEARCH_ERROR": "You cannot see someone else's profile",
     "PROFILE_LASTNAME": "Last Name",
     "PROFILE_EMAIL": "Email",
     "PROFILE_CONFIRMEMAIL": "Confirm Email",
@@ -128,5 +129,6 @@ module.exports = {
     "BILLING_GIFTCERT_GIFTCERT_INVALID ": "Invalid Gift Certificate",
     "BILLING_GIFTCERT_GIFTCERT_WRONG_CURRENCY ": "The gift Certificate can only be redeemed for orders placed in the same currency as the gift certificate",
     "BILLING_GIFTCERT_GIFTCERT_NOFUNDS ": "Insufficient Gift Certificate balance",
-    "ACCOUNT_NOT_AUTHORIZED": "Not authorized"
+    "ACCOUNT_NOT_AUTHORIZED": "Not authorized",
+    "DATA_NOT_EXITS": "This data is not exits"
 }

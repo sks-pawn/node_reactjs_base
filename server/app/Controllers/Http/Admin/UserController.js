@@ -4,8 +4,9 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 const Status = use('App/Constants/Status')
+const Message = use('App/Constants/Message')
 const { LoggerPermanent } = use('App/Helpers/Loggers')
-const User = use('App/Models/User')
+const { BadResponseException, SucessResponse } = use('App/Helpers/Responses')
 /**
  * Resourceful controller for interacting with users
  */
@@ -49,7 +50,7 @@ class UserController {
    * @param {Response} ctx.response
    */
   async store({ request, response }) {
-    const body = request.post()
+    let body = request.post()
     // console.log('body :', body);
     return body;
   }
@@ -65,21 +66,14 @@ class UserController {
    */
   async show({ auth, params, request, response, view, session }) {
     try {
-      return await auth.listTokens()
-
-      // const { email, password } = { 'email': 'admin@gmail.com', 'password': '123123' }
-      // await auth.attempt(email, password)
-      // return await auth.getUser()
+      let id = { params }
+      if (auth.user.id !== id) {
+        return BadResponseException(response, Message.PROFILE_SEARCH_ERROR);
+      }
+      return SucessResponse(response, auth.user);
     } catch (error) {
       throw error
     }
-    // console.log('session :', session.all());
-    // const { id } = params;
-    // console.log('auth.user :', auth.user.id);
-    // if (auth.user.id !== Number(id)) {
-    //   return "You cannot see someone else's profile"
-    // }
-    // return auth.user
   }
 
   /**
@@ -103,8 +97,8 @@ class UserController {
    * @param {Response} ctx.response
    */
   async update({ params, request, response, auth }) {
-    const { id } = params;
-    const body = request.post()
+    let { id } = params;
+    let body = request.post()
   }
 
   /**
@@ -116,19 +110,14 @@ class UserController {
    * @param {Response} ctx.response
    */
   async destroy({ params, request, response }) {
-    const { id } = params;
+    let { id } = params;
   }
 
   async login({ auth, request, response, session }) {
     try {
-
-      const { email, password } = request.post()
-      var b = await auth.withRefreshToken().attempt(email, password)
-      return await auth.newRefreshToken().generateForRefreshToken(b.refreshToken)
-      // const user = await User.find(3)
-      // return await auth.generate(user, true)
-      // return auth.user
-
+      let { email, password } = request.post()
+      let jwt = await auth.withRefreshToken().attempt(email, password)
+      return SucessResponse(response, jwt);
     } catch (error) {
       LoggerPermanent(error, request, request.post())
       throw error

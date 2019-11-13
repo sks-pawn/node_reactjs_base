@@ -73,7 +73,8 @@ module.exports = {
     password: 'password',
     options: {
       secret: Env.get('APP_KEY'),
-      expiresIn: Env.get('JWT_EXPIRESIN')    }
+      expiresIn: Env.get('JWT_EXPIRESIN')
+    }
   },
 
   /*
