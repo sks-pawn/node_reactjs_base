@@ -6,7 +6,7 @@
 const Status = use('App/Constants/Status')
 const Message = use('App/Constants/Message')
 const { LoggerPermanent } = use('App/Helpers/Loggers')
-const { BadResponseException, SucessResponse } = use('App/Helpers/Responses')
+const { BadResponseException, SucessResponse } = use('App/Helpers/Response')
 /**
  * Resourceful controller for interacting with users
  */
@@ -68,7 +68,7 @@ class UserController {
     try {
       let id = { params }
       if (auth.user.id !== id) {
-        return BadResponseException(response, Message.PROFILE_SEARCH_ERROR);
+        return BadResponseException(response, { id }, Message.PROFILE_SEARCH_ERROR);
       }
       return SucessResponse(response, auth.user);
     } catch (error) {
@@ -113,7 +113,7 @@ class UserController {
     let { id } = params;
   }
 
-  async login({ auth, request, response, session }) {
+  async login({ auth, request, response }) {
     try {
       let { email, password } = request.post()
       let jwt = await auth.withRefreshToken().attempt(email, password)

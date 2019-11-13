@@ -1,7 +1,7 @@
 'use strict'
 
 const Message = use('App/Constants/Message')
-const { BadResponseException } = use('App/Helpers/Responses')
+const { BadResponseException } = use('App/Helpers/Response')
 
 class ParamIsNumber {
   get rules() {
