@@ -3,10 +3,13 @@
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
+
+const Database = use('Database')
 const Status = use('App/Constants/Status')
 const Message = use('App/Constants/Message')
-const { LoggerPermanent } = use('App/Helpers/Loggers')
+const { LoggerPermanentException } = use('App/Helpers/Loggers')
 const { BadResponseException, SucessResponse } = use('App/Helpers/Response')
+const User = use('App/Models/User')
 /**
  * Resourceful controller for interacting with users
  */
@@ -50,9 +53,15 @@ class UserController {
    * @param {Response} ctx.response
    */
   async store({ request, response }) {
-    let body = request.post()
-    // console.log('body :', body);
-    return body;
+    try {
+      let body = request.post()
+      // let data = await Database.table('users').insert(body)
+      let data = await new User().save(body)
+      return SucessResponse(response, data, null, Status.Created);
+    } catch (error) {
+      LoggerPermanentException(error, request, request.post())
+      throw error
+    }
   }
 
   /**
@@ -64,14 +73,16 @@ class UserController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({ auth, params, request, response, view, session }) {
+  async show({ auth, params, request, response }) {
     try {
-      let id = { params }
-      if (auth.user.id !== id) {
-        return BadResponseException(response, { id }, Message.PROFILE_SEARCH_ERROR);
+      let { id } = params
+      if (auth.user.role === 1) return SucessResponse(response, auth.user); //ADMIN
+      if (auth.user.id !== Number(id)) {
+        return BadResponseException(response, { id }, Message.PROFILE_SEE_ERROR);
       }
       return SucessResponse(response, auth.user);
     } catch (error) {
+      LoggerPermanentException(error, request, request.post())
       throw error
     }
   }
@@ -97,8 +108,27 @@ class UserController {
    * @param {Response} ctx.response
    */
   async update({ params, request, response, auth }) {
-    let { id } = params;
-    let body = request.post()
+    try {
+      let { id } = params;
+      let body = request.post()
+      //ADMIN hoặc chính nó
+      if (auth.user.role === 1 || auth.user.id === Number(id)) {
+        let update = await Database
+          .table('users')
+          .where('id', id)
+          .update(body)
+        if (auth.user.id === Number(id)) {
+          // chính nó thì reset jwt
+          let jwt = await auth.withRefreshToken().generate(auth.user)
+          return SucessResponse(response, { jwt, update });
+        }
+        return SucessResponse(response, { update });
+      }
+      return BadResponseException(response, { id }, Message.PROFILE_UPDATE_ERROR);
+    } catch (error) {
+      LoggerPermanentException(error, request, request.post())
+      throw error
+    }
   }
 
   /**
@@ -119,7 +149,7 @@ class UserController {
       let jwt = await auth.withRefreshToken().attempt(email, password)
       return SucessResponse(response, jwt);
     } catch (error) {
-      LoggerPermanent(error, request, request.post())
+      LoggerPermanentException(error, request, request.post())
       throw error
     }
   }

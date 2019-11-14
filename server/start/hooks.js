@@ -43,4 +43,6 @@ hooks.after.providersRegistered(() => {
     Validator.extend('exists', existsFn)
     Validator.extend('notExists', notExistsFn)
 
+
+    // Database.on('query', console.log)
 })

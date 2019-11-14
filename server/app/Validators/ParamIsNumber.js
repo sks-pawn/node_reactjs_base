@@ -1,32 +1,31 @@
 'use strict'
 
 const Message = use('App/Constants/Message')
-const { BadResponseException } = use('App/Helpers/Response')
+const { BadValidatorException } = use('App/Helpers/Response')
 
 class ParamIsNumber {
   get rules() {
     return {
       // validation rules
-      id: 'required|exists:users,id'
+      id: 'required|number|exists:users,id'
     }
   }
 
   get data() {
     const { id } = this.ctx.params
-    if (Number(id)) {
-      return Object.assign({}, { id })
-    }
+    return Object.assign({}, { id })
   }
 
   get messages() {
     return {
       'id.required': Message.VALIDATE_REQUIRED,
+      'id.number': Message.VALIDATE_NUMBNUMBER,
       'id.exists': Message.DATA_NOT_EXITS
     }
   }
 
   async fails(errorMessages) {
-    return BadResponseException(this.ctx.response, errorMessages)
+    return BadValidatorException(this.ctx.response, errorMessages)
   }
 }
 

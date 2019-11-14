@@ -15,18 +15,19 @@
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
-
-Route.get('/', () => {
-  return "<h1>HELLO ADONIS SERVER</h1>"
+const User = use('App/Models/User')
+Route.get('/', async () => {
+  return await User.all()
 })
 
 Route.group(() => {
   Route.resource('users', 'Admin/UserController')
     .apiOnly()
     .validator(new Map([
-      [['store'], ['UserStore']],
-      [['show, '], ['ParamIsNumber']],
+      [['store'], ['UserStoreUpdate']],
+      [['show'], ['ParamIsNumber']],
       [['update'], ['ParamIsNumber']],
+      [['update'], ['UserStoreUpdate']],
       [['destroy'], ['ParamIsNumber']]
     ]))
     .middleware(new Map([
@@ -35,7 +36,6 @@ Route.group(() => {
     ]))
 
   Route.post('login', 'Admin/UserController.login')
-  // .middleware('guest:jwt')
 }).prefix('admin/')
   .middleware(['country:convertEmptyData'])
   .formats(['json'], true)

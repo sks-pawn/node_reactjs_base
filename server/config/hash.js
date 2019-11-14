@@ -25,7 +25,7 @@ module.exports = {
   |
   */
   bcrypt: {
-    rounds: Env.get('HASH_ROUNDS', 10)
+    rounds: Number(Env.get('HASH_ROUNDS', 10))
   },
 
   /*
