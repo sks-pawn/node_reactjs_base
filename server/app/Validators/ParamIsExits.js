@@ -3,7 +3,7 @@
 const Message = use('App/Constants/Message')
 const { BadValidatorException } = use('App/Helpers/Response')
 
-class ParamIsNumber {
+class ParamIsExits {
   get rules() {
     return {
       // validation rules
@@ -29,4 +29,4 @@ class ParamIsNumber {
   }
 }
 
-module.exports = ParamIsNumber
+module.exports = ParamIsExits

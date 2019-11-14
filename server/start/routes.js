@@ -25,10 +25,10 @@ Route.group(() => {
     .apiOnly()
     .validator(new Map([
       [['store'], ['UserStoreUpdate']],
-      [['show'], ['ParamIsNumber']],
-      [['update'], ['ParamIsNumber']],
+      [['show'], ['ParamIsExits']],
+      [['update'], ['ParamIsExits']],
       [['update'], ['UserStoreUpdate']],
-      [['destroy'], ['ParamIsNumber']]
+      [['destroy'], ['ParamIsExits']]
     ]))
     .middleware(new Map([
       [['show', 'store'], ['auth']],
