@@ -15,12 +15,11 @@ class User extends Model {
      * it to the database.
      */
     this.addHook('beforeSave', async (userInstance) => {
-      if (userInstance.dirty.password) {
+      if (userInstance.password) {
         userInstance.password = await Hash.make(userInstance.password)
       }
     })
   }
-
   /**
    * A relationship on tokens is required for auth to
    * work. Since features like `refreshTokens` or

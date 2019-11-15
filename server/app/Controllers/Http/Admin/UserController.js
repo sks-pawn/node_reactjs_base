@@ -4,7 +4,6 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
-const Database = use('Database')
 const Status = use('App/Constants/Status')
 const Message = use('App/Constants/Message')
 const { LoggerPermanentException } = use('App/Helpers/Loggers')
@@ -23,13 +22,17 @@ class UserController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index({ request, response, session }) {
-    var cartTotal = request.cookie('cartTotal')
-    response
-      .cookie('cartTotal', 50)
-    response
-      .status(Status.Created)
-      .json({ greeting: 'Hello world in JSON' })
+  async index({ auth, request, response }) {
+    try {
+      if (auth.user.role === 1) {
+        let users = await User.all()
+        return SucessResponse(response, users);
+      }
+      return BadResponseException(response, null, Message.PROFILE_PERMISSION_ERROR);
+    } catch (error) {
+      LoggerPermanentException(error, request, request.post())
+      return BadResponseException(response, request.post(), error.message);
+    }
   }
 
   /**
@@ -55,12 +58,11 @@ class UserController {
   async store({ request, response }) {
     try {
       let body = request.post()
-      // let data = await Database.table('users').insert(body)
-      let data = await new User().save(body)
-      return SucessResponse(response, data, null, Status.Created);
+      let user = await User.create(body)
+      return SucessResponse(response, user, null, Status.Created);
     } catch (error) {
       LoggerPermanentException(error, request, request.post())
-      throw error
+      return BadResponseException(response, request.post(), error.message);
     }
   }
 
@@ -83,7 +85,7 @@ class UserController {
       return SucessResponse(response, auth.user);
     } catch (error) {
       LoggerPermanentException(error, request, request.post())
-      throw error
+      return BadResponseException(response, request.post(), error.message);
     }
   }
 
@@ -107,27 +109,24 @@ class UserController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update({ params, request, response, auth }) {
+  async update({ auth, params, request, response }) {
     try {
       let { id } = params;
       let body = request.post()
       //ADMIN hoặc chính nó
       if (auth.user.role === 1 || auth.user.id === Number(id)) {
-        let update = await Database
-          .table('users')
-          .where('id', id)
-          .update(body)
-        if (auth.user.id === Number(id)) {
-          // chính nó thì reset jwt
-          let jwt = await auth.withRefreshToken().generate(auth.user)
-          return SucessResponse(response, { jwt, update });
+        let update = await User.query().where('id', id).update(body)
+        if (body.password) {
+          let user = await User.find(id)
+          user.password = body.password
+          await user.save()
         }
         return SucessResponse(response, { update });
       }
       return BadResponseException(response, { id }, Message.PROFILE_UPDATE_ERROR);
     } catch (error) {
       LoggerPermanentException(error, request, request.post())
-      throw error
+      return BadResponseException(response, request.post(), error.message);
     }
   }
 
@@ -139,18 +138,30 @@ class UserController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy({ params, request, response }) {
-    let { id } = params;
+  async destroy({ auth, params, request, response }) {
+    try {
+      let { id } = params;
+      if (auth.user.role === 1 || auth.user.id === Number(id)) {
+        let destroy = await User.query().where('id', id).update({ status: false })
+        return SucessResponse(response, destroy);
+      }
+      return BadResponseException(response, { id }, Message.PROFILE_PERMISSION_ERROR);
+    } catch (error) {
+      LoggerPermanentException(error, request, request.post())
+      return BadResponseException(response, request.post(), error.message);
+    }
   }
 
   async login({ auth, request, response }) {
+    let { email, password } = request.post()
     try {
-      let { email, password } = request.post()
-      let jwt = await auth.withRefreshToken().attempt(email, password)
+      let jwt = await auth.query((builder) => {
+        builder.where('status', true)
+      }).withRefreshToken().attempt(email, password)
       return SucessResponse(response, jwt);
     } catch (error) {
       LoggerPermanentException(error, request, request.post())
-      throw error
+      return BadResponseException(response, request.post(), error.message);
     }
   }
 }

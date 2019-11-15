@@ -31,8 +31,7 @@ Route.group(() => {
       [['destroy'], ['ParamIsExits']]
     ]))
     .middleware(new Map([
-      [['show', 'store'], ['auth']],
-      // [['store'], ['auth']]
+      [['index', 'show', 'update', 'destroy'], ['auth']]
     ]))
 
   Route.post('login', 'Admin/UserController.login')

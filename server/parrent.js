@@ -51,3 +51,10 @@ Route.get('download/:fileId', async ({ params, response }) => {
     const file = await Files.findorFail(params.fileId)
     response.download(Helpers.tmpPath('uploads/${file.path}'))
 })
+
+
+if (auth.user.id === Number(id)) {
+    // chính nó thì reset jwt
+    let jwt = await auth.withRefreshToken().generate(auth.user)
+    return SucessResponse(response, { jwt, update });
+}

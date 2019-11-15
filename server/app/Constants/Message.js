@@ -29,6 +29,7 @@ module.exports = {
     "BML_TERMS_ERROR": "You must agree to the terms and conditions",
     "PROFILE_SEE_ERROR": "You cannot see someone else's profile",
     "PROFILE_UPDATE_ERROR": "You cannot update someone else's profile",
+    "PROFILE_PERMISSION_ERROR": "You do not have permission to perform this function",
     "PROFILE_LASTNAME": "Last Name",
     "PROFILE_CONFIRMEMAIL": "Confirm Email",
     "PROFILE_DOB": "Date of Birth",
