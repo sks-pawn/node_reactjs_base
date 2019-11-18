@@ -20,6 +20,8 @@ const providers = [
   // '@adonisjs/shield/providers/ShieldProvider',
   '@adonisjs/session/providers/SessionProvider',
   '@adonisjs/validator/providers/ValidatorProvider',
+  '@adonisjs/framework/providers/ViewProvider',
+  '@adonisjs/mail/providers/MailProvider',
   path.join(__dirname, '..', 'providers', 'CustomLogger')
 ]
 /*

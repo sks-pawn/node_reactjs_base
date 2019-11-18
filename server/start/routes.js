@@ -35,6 +35,9 @@ Route.group(() => {
     ]))
 
   Route.post('login', 'Admin/UserController.login')
+  Route.delete('destroy-forever/:id', 'Admin/UserController.destroyForever')
+    .validator('ParamIsExits')
+    .middleware('auth')
 }).prefix('admin/')
   .middleware(['country:convertEmptyData'])
   .formats(['json'], true)

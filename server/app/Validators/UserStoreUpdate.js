@@ -21,13 +21,13 @@ class UserStore {
     return {
       ...defined, ...{
         email: 'required|email|notExists:users,email',
-        password: 'required',
-        first_name: 'required',
-        last_name: 'required',
-        role: 'required',
+        password: 'required|string|max:255',
+        first_name: 'required|string|max:255',
+        last_name: 'required|string|max:255',
+        role: 'required|number',
         status: 'required|number',
-        phone: 'required|notExists:users,phone',
-        gender: 'required|number'
+        phone: 'required|phone|notExists:users,phone',
+        gender: 'required|boolean'
       }
     }
   }

@@ -18,24 +18,30 @@ const handleCheckExits = async (data, field, args, get) => {
 }
 hooks.after.providersRegistered(() => {
     const Validator = use('Validator')
+    const Specialize = use('App/Constants/Specialize')
+
     // use when updating if id data exits
     const existsFn = async (data, field, message, args, get) => {
         let row = await handleCheckExits(data, field, args, get)
-        if (!row) {
-            throw message
-        }
+        if (!row) throw message
     }
 
     // use when initialization 
     const notExistsFn = async (data, field, message, args, get) => {
         let row = await handleCheckExits(data, field, args, get)
-        if (row) {
-            throw message
-        }
+        if (row) throw message
+    }
+
+    const phoneFn = async (data, field, message, args, get) => {
+        let value = get(data, field)
+        if (!value) return
+        let res = Specialize.Validator.phone.vn.test(value)
+        if (!res) throw message
     }
 
     Validator.extend('exists', existsFn)
     Validator.extend('notExists', notExistsFn)
+    Validator.extend('phone', phoneFn)
 
     // Database.on('query', console.log)
 })

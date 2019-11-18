@@ -4,11 +4,13 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
+const Event = use('Event')
 const Status = use('App/Constants/Status')
 const Message = use('App/Constants/Message')
+const User = use('App/Models/User')
 const { LoggerPermanentException } = use('App/Helpers/Loggers')
 const { BadResponseException, SucessResponse } = use('App/Helpers/Response')
-const User = use('App/Models/User')
+
 /**
  * Resourceful controller for interacting with users
  */
@@ -58,8 +60,9 @@ class UserController {
   async store({ request, response }) {
     try {
       let body = request.post()
-      let user = await User.create(body)
-      return SucessResponse(response, user, null, Status.Created);
+      // let user = await User.create(body)
+      if (body) Event.fire('new::user', body)
+      return SucessResponse(response, body, null, Status.Created);
     } catch (error) {
       LoggerPermanentException(error, request, request.post())
       return BadResponseException(response, request.post(), error.message);
@@ -159,6 +162,23 @@ class UserController {
         builder.where('status', true)
       }).withRefreshToken().attempt(email, password)
       return SucessResponse(response, jwt);
+    } catch (error) {
+      LoggerPermanentException(error, request, request.post())
+      return BadResponseException(response, request.post(), error.message);
+    }
+  }
+
+  async destroyForever({ auth, params, request, response }) {
+    try {
+      let { id } = params;
+      let data = request.post();
+      if (auth.user.role === 1) {
+        let arr = [id]
+        if (data.id) arr = data.id
+        let destroy = await User.query().whereIn('id', arr).delete()
+        return SucessResponse(response, destroy);
+      }
+      return BadResponseException(response, { id }, Message.PROFILE_PERMISSION_ERROR);
     } catch (error) {
       LoggerPermanentException(error, request, request.post())
       return BadResponseException(response, request.post(), error.message);
