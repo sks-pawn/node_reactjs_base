@@ -1,3 +1,3 @@
 const Event = use('Event')
 
-Event.on('new::user', 'User.registered')
+Event.on('user::registered', 'User.registered')

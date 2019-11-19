@@ -16,6 +16,7 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 const User = use('App/Models/User')
+
 Route.get('/', async () => {
   return await User.all()
 })
@@ -43,5 +44,8 @@ Route.group(() => {
   .formats(['json'], true)
 
 
-
+Route.post('upload', 'Admin/UploadController.avatar')
+  .validator('UploadImage')
+  .middleware(['country:convertEmptyData'])
+  .formats(['json'], true)
 

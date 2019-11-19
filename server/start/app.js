@@ -21,9 +21,13 @@ const providers = [
   '@adonisjs/session/providers/SessionProvider',
   '@adonisjs/validator/providers/ValidatorProvider',
   '@adonisjs/framework/providers/ViewProvider',
-  '@adonisjs/mail/providers/MailProvider',
-  path.join(__dirname, '..', 'providers', 'CustomLogger')
+  '@adonisjs/mail/providers/MailProvider'
 ]
+
+const providersCustom = ['CustomLogger', 'CustomValidator', 'CustomResponse', 'CustomRequest']
+providersCustom.forEach(element => {
+  providers.push(path.join(__dirname, '..', 'providers', element))
+})
 /*
 |--------------------------------------------------------------------------
 | Ace Providers

@@ -1,12 +1,10 @@
 'use strict'
-
+const { SendMail } = use('App/Helpers/Mail')
 const User = exports = module.exports = {}
-const Mail = use('Mail')
 
-User.registered = async (user) => {
-    console.log('user :', user);
-    await Mail.send('emails.register', user, (message) => {
-        message.to("thanhanh.nguyen@isobar.com")
-        message.from('anhthanh1996vp@gmail.com')
-    })
+User.registered = async user => {
+    user.attachPath = 'pdf/getting-startd.pdf'
+    user.attachFilename = 'Getting Started'
+    user.views = 'emails.register'
+    await SendMail(user)
 }

@@ -1,7 +1,6 @@
 'use strict'
 
 const Message = use('App/Constants/Message')
-const { BadValidatorException } = use('App/Helpers/Response')
 
 class ParamIsExits {
   get rules() {
@@ -25,7 +24,7 @@ class ParamIsExits {
   }
 
   async fails(errorMessages) {
-    return BadValidatorException(this.ctx.response, errorMessages)
+    this.ctx.response.BadValidatorException(errorMessages)
   }
 }
 

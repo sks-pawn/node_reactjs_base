@@ -216,10 +216,18 @@ module.exports = {
     | For a different directory, set an absolute path for the filename.
     |
     */
-    file: {
+    exception: {
       driver: 'file',
-      name: 'adonis-app',
-      filename: 'adonis.log',
+      name: 'adonis-exception',
+      filename: 'exception.log',
+      level: 'info',
+      timestamp: new Date().toLocaleString(),
+      type: 'file'
+    },
+    basic: {
+      driver: 'file',
+      name: 'adonis-basic',
+      filename: 'basic.log',
       level: 'info',
       timestamp: new Date().toLocaleString(),
       type: 'file'

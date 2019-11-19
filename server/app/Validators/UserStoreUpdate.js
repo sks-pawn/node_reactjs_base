@@ -1,7 +1,6 @@
 'use strict'
 
 const Message = use('App/Constants/Message')
-const { BadValidatorException } = use('App/Helpers/Response')
 
 class UserStore {
   get validateAll() {
@@ -40,7 +39,7 @@ class UserStore {
   }
 
   async fails(errorMessages) {
-    return BadValidatorException(this.ctx.response, errorMessages)
+    return this.ctx.response.BadValidatorException(errorMessages)
   }
 }
 

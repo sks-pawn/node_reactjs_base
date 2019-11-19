@@ -2,8 +2,15 @@ let naPhone = /^[0-9]+$/;
 
 module.exports = {
     Upload: {
-        IMAGE_SIZE_MAX: 950000,
-        FILE_SIZE_MAX: 2097152,
+        IMAGE_LENGTH_MAX: 950000,
+        IMAGE_SIZE_MAX: {
+            number: 512000,
+            string: "500kb"
+        },
+        FILE_SIZE_MAX: {
+            number: 2097152,
+            string: "2mb"
+        },
         VALID_IMAGE_TYPES: ['image/jpeg', 'image/png'],
         VALID_DOCUMENT_FILE_TYPES: [
             'image/gif',

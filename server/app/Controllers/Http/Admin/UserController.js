@@ -9,7 +9,6 @@ const Status = use('App/Constants/Status')
 const Message = use('App/Constants/Message')
 const User = use('App/Models/User')
 const { LoggerPermanentException } = use('App/Helpers/Loggers')
-const { BadResponseException, SucessResponse } = use('App/Helpers/Response')
 
 /**
  * Resourceful controller for interacting with users
@@ -28,12 +27,12 @@ class UserController {
     try {
       if (auth.user.role === 1) {
         let users = await User.all()
-        return SucessResponse(response, users);
+        return response.SucessResponse(users);
       }
-      return BadResponseException(response, null, Message.PROFILE_PERMISSION_ERROR);
+      return response.BadResponseException(null, Message.PROFILE_PERMISSION_ERROR);
     } catch (error) {
       LoggerPermanentException(error, request, request.post())
-      return BadResponseException(response, request.post(), error.message);
+      return response.BadResponseException(request.post(), error.message);
     }
   }
 
@@ -60,12 +59,12 @@ class UserController {
   async store({ request, response }) {
     try {
       let body = request.post()
-      // let user = await User.create(body)
-      if (body) Event.fire('new::user', body)
-      return SucessResponse(response, body, null, Status.Created);
+      let user = await User.create(body)
+      if (user) Event.fire('user::registered', user)
+      return response.SucessResponse(user, null, Status.Created);
     } catch (error) {
       LoggerPermanentException(error, request, request.post())
-      return BadResponseException(response, request.post(), error.message);
+      return response.BadResponseException(request.post(), error.message);
     }
   }
 
@@ -81,14 +80,14 @@ class UserController {
   async show({ auth, params, request, response }) {
     try {
       let { id } = params
-      if (auth.user.role === 1) return SucessResponse(response, auth.user); //ADMIN
+      if (auth.user.role === 1) return response.SucessResponse(auth.user); //ADMIN
       if (auth.user.id !== Number(id)) {
-        return BadResponseException(response, { id }, Message.PROFILE_SEE_ERROR);
+        return response.BadResponseException({ id }, Message.PROFILE_SEE_ERROR);
       }
-      return SucessResponse(response, auth.user);
+      return response.SucessResponse(auth.user);
     } catch (error) {
       LoggerPermanentException(error, request, request.post())
-      return BadResponseException(response, request.post(), error.message);
+      return response.BadResponseException(request.post(), error.message);
     }
   }
 
@@ -124,12 +123,12 @@ class UserController {
           user.password = body.password
           await user.save()
         }
-        return SucessResponse(response, { update });
+        return response.SucessResponse({ update });
       }
-      return BadResponseException(response, { id }, Message.PROFILE_UPDATE_ERROR);
+      return response.BadResponseException({ id }, Message.PROFILE_UPDATE_ERROR);
     } catch (error) {
       LoggerPermanentException(error, request, request.post())
-      return BadResponseException(response, request.post(), error.message);
+      return response.BadResponseException(request.post(), error.message);
     }
   }
 
@@ -146,12 +145,12 @@ class UserController {
       let { id } = params;
       if (auth.user.role === 1 || auth.user.id === Number(id)) {
         let destroy = await User.query().where('id', id).update({ status: false })
-        return SucessResponse(response, destroy);
+        return response.SucessResponse(destroy);
       }
-      return BadResponseException(response, { id }, Message.PROFILE_PERMISSION_ERROR);
+      return response.BadResponseException({ id }, Message.PROFILE_PERMISSION_ERROR);
     } catch (error) {
       LoggerPermanentException(error, request, request.post())
-      return BadResponseException(response, request.post(), error.message);
+      return response.BadResponseException(request.post(), error.message);
     }
   }
 
@@ -161,10 +160,10 @@ class UserController {
       let jwt = await auth.query((builder) => {
         builder.where('status', true)
       }).withRefreshToken().attempt(email, password)
-      return SucessResponse(response, jwt);
+      return response.SucessResponse(jwt);
     } catch (error) {
       LoggerPermanentException(error, request, request.post())
-      return BadResponseException(response, request.post(), error.message);
+      return response.BadResponseException(request.post(), error.message);
     }
   }
 
@@ -176,12 +175,12 @@ class UserController {
         let arr = [id]
         if (data.id) arr = data.id
         let destroy = await User.query().whereIn('id', arr).delete()
-        return SucessResponse(response, destroy);
+        return response.SucessResponse(destroy);
       }
-      return BadResponseException(response, { id }, Message.PROFILE_PERMISSION_ERROR);
+      return response.BadResponseException({ id }, Message.PROFILE_PERMISSION_ERROR);
     } catch (error) {
       LoggerPermanentException(error, request, request.post())
-      return BadResponseException(response, request.post(), error.message);
+      return response.BadResponseException(request.post(), error.message);
     }
   }
 }

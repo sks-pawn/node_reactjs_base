@@ -6,8 +6,8 @@ const getStringFromEncodeBase64 = (str) => {
 
 export default readURL = (file) => {
     if (!file || (file && file.size === 0)) return false;
-    let maxString = Upload.IMAGE_SIZE_MAX;
-    let maxMb = Upload.FILE_SIZE_MAX;
+    let maxString = Upload.IMAGE_LENGTH_MAX;
+    let maxMb = Upload.FILE_SIZE_MAX.number;
     let reader = new FileReader();
 
     if (file) {

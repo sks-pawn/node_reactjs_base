@@ -3,7 +3,7 @@ const Logger = use('Logger')
 const LoggerCustom = {
     LoggerPermanentException(error, request, data = null) {
         Logger.error(error.message, { url: request.url() })
-        Logger.transport('file').error(error.message, {
+        Logger.transport('exception').error(error.message, {
             timestamp: new Date().toLocaleString(),
             url: request.url(),
             data: data,
@@ -12,7 +12,14 @@ const LoggerCustom = {
     },
     LoggerPermanentValidator() {
 
-    }
+    },
+    LoggerPermanentBasic(error) {
+        Logger.error(error.message)
+        Logger.transport('basic').error(error.message, {
+            timestamp: new Date().toLocaleString(),
+            data: error
+        })
+    },
 }
 
 
