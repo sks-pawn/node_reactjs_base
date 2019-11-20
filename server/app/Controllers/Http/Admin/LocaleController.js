@@ -2,11 +2,6 @@
 const Antl = use('Antl')
 const Formats = use('Antl/Formats')
 
-Formats.add('usd', {
-    style: 'currency',
-    currency: 'usd'
-})
-
 class LocaleController {
     async getLocale() {
         return Antl.formatMessage(

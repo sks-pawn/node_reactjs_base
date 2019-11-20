@@ -10,8 +10,10 @@
 | provider here.
 |
 */
+const fs = require('fs');
 const path = require('path')
 const Helpers = use('Helpers')
+
 const providers = [
   '@adonisjs/framework/providers/AppProvider',
   '@adonisjs/auth/providers/AuthProvider',
@@ -27,10 +29,9 @@ const providers = [
   // '@adonisjs/drive/providers/DriveProvider',
 ]
 
-const providersCustom = ['CustomLogger', 'CustomValidator', 'CustomResponse', 'CustomRequest']
-providersCustom.forEach(element => {
-  providers.push(path.join(Helpers.appRoot(), 'providers', element))
-})
+fs.readdirSync(Helpers.appRoot() + '/providers').forEach(file => {
+  providers.push(path.join(Helpers.appRoot(), 'providers', file))
+});
 
 /*
 |--------------------------------------------------------------------------

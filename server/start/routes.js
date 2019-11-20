@@ -47,10 +47,10 @@ Route.group(() => {
     .middleware('auth')
     .validator('UploadImage')
 
-  Route.get('locale', 'Admin/LocaleController.getLocale')
 }).prefix('admin/')
   .middleware(['country:convertEmptyData'])
   .formats(['json'], true)
 
 
+  Route.get('locale', 'Admin/LocaleController.getLocale')
 

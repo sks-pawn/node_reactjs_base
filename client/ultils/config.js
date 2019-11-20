@@ -2,7 +2,8 @@ import axios from 'axios';
 import _ from 'lodash';
 
 const baseHeaders = {
-    'Accept': 'application/json'
+    'Accept': 'application/json',
+    'Accept-Language': 'vi'
 }
 
 const config = process.env.NODE_ENV === 'development' ? {
