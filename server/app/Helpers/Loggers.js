@@ -5,6 +5,7 @@ const LoggerCustom = {
         Logger.error(error.message, { url: request.url() })
         Logger.transport('exception').error(error.message, {
             timestamp: new Date().toLocaleString(),
+            method: request.method(),
             url: request.url(),
             data: data,
             addressIp: request.addressIp

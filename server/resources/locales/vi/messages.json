@@ -1,0 +1,5 @@
+{
+    "alert": "tin nhắn thành công",
+    "greeting": "Xin chào {name}",
+    "total": "Tổng số giỏ hàng là {total, number, usd}"
+}

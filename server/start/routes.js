@@ -36,16 +36,21 @@ Route.group(() => {
     ]))
 
   Route.post('login', 'Admin/UserController.login')
+
+  Route.delete('users', 'Admin/UserController.destroy').middleware('auth')
+  Route.delete('destroy-forever', 'Admin/UserController.destroyForever').middleware('auth')
   Route.delete('destroy-forever/:id', 'Admin/UserController.destroyForever')
     .validator('ParamIsExits')
     .middleware('auth')
+
+  Route.post('upload', 'Admin/UploadController.avatar')
+    .middleware('auth')
+    .validator('UploadImage')
+
+  Route.get('locale', 'Admin/LocaleController.getLocale')
 }).prefix('admin/')
   .middleware(['country:convertEmptyData'])
   .formats(['json'], true)
 
 
-Route.post('upload', 'Admin/UploadController.avatar')
-  .validator('UploadImage')
-  .middleware(['country:convertEmptyData'])
-  .formats(['json'], true)
 

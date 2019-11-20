@@ -143,11 +143,15 @@ class UserController {
   async destroy({ auth, params, request, response }) {
     try {
       let { id } = params;
+      let data = request.post();
+      let arr = id ? [id] : data.id
       if (auth.user.role === 1 || auth.user.id === Number(id)) {
-        let destroy = await User.query().where('id', id).update({ status: false })
-        return response.SucessResponse(destroy);
+        if (id || data.id.length) {
+          let destroy = await User.query().whereIn('id', arr).update({ status: false })
+          return response.SucessResponse(destroy);
+        }
       }
-      return response.BadResponseException({ id }, Message.PROFILE_PERMISSION_ERROR);
+      return response.BadResponseException({ id: arr }, Message.PROFILE_PERMISSION_ERROR);
     } catch (error) {
       LoggerPermanentException(error, request, request.post())
       return response.BadResponseException(request.post(), error.message);
@@ -171,13 +175,12 @@ class UserController {
     try {
       let { id } = params;
       let data = request.post();
-      if (auth.user.role === 1) {
-        let arr = [id]
-        if (data.id) arr = data.id
+      let arr = id ? [id] : data.id
+      if (auth.user.role === 1 && (id || data.id.length)) {
         let destroy = await User.query().whereIn('id', arr).delete()
         return response.SucessResponse(destroy);
       }
-      return response.BadResponseException({ id }, Message.PROFILE_PERMISSION_ERROR);
+      return response.BadResponseException({ id: arr }, Message.PROFILE_PERMISSION_ERROR);
     } catch (error) {
       LoggerPermanentException(error, request, request.post())
       return response.BadResponseException(request.post(), error.message);

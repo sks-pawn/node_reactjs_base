@@ -11,23 +11,27 @@
 |
 */
 const path = require('path')
+const Helpers = use('Helpers')
 const providers = [
   '@adonisjs/framework/providers/AppProvider',
   '@adonisjs/auth/providers/AuthProvider',
   '@adonisjs/bodyparser/providers/BodyParserProvider',
   '@adonisjs/cors/providers/CorsProvider',
   '@adonisjs/lucid/providers/LucidProvider',
-  // '@adonisjs/shield/providers/ShieldProvider',
   '@adonisjs/session/providers/SessionProvider',
   '@adonisjs/validator/providers/ValidatorProvider',
   '@adonisjs/framework/providers/ViewProvider',
-  '@adonisjs/mail/providers/MailProvider'
+  '@adonisjs/mail/providers/MailProvider',
+  '@adonisjs/antl/providers/AntlProvider'
+  // '@adonisjs/shield/providers/ShieldProvider',
+  // '@adonisjs/drive/providers/DriveProvider',
 ]
 
 const providersCustom = ['CustomLogger', 'CustomValidator', 'CustomResponse', 'CustomRequest']
 providersCustom.forEach(element => {
-  providers.push(path.join(__dirname, '..', 'providers', element))
+  providers.push(path.join(Helpers.appRoot(), 'providers', element))
 })
+
 /*
 |--------------------------------------------------------------------------
 | Ace Providers
