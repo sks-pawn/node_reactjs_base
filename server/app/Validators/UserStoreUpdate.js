@@ -1,7 +1,5 @@
 'use strict'
 
-const Message = use('App/Constants/Message')
-
 class UserStore {
   get validateAll() {
     return true
@@ -19,22 +17,15 @@ class UserStore {
     //create
     return {
       ...defined, ...{
-        email: 'required|email|notExists:users,email',
+        email: 'required|email|unique:users,email',
         password: 'required|string|max:255',
         first_name: 'required|string|max:255',
         last_name: 'required|string|max:255',
         role: 'required|number',
         status: 'required|number',
-        phone: 'required|phone|notExists:users,phone',
+        phone: 'required|phone|unique:users,phone',
         gender: 'required|boolean'
       }
-    }
-  }
-
-  get messages() {
-    return {
-      'email.notExists': Message.VALIDATE_EMAIL_UNIQUE,
-      'phone.notExists': Message.VALIDATE_PHONE_UNIQUE
     }
   }
 

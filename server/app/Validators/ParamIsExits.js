@@ -1,6 +1,5 @@
 'use strict'
-
-const Message = use('App/Constants/Message')
+const Antl = use('Antl')
 
 class ParamIsExits {
   get rules() {
@@ -17,9 +16,9 @@ class ParamIsExits {
 
   get messages() {
     return {
-      'id.required': Message.VALIDATE_REQUIRED,
-      'id.number': Message.VALIDATE_NUMBNUMBER,
-      'id.exists': Message.DATA_NOT_EXITS
+      'id.required': Antl.formatMessage('messages.VALIDATE_REQUIRED'),
+      'id.number': Antl.formatMessage('messages.VALIDATE_NUMBNUMBER'),
+      'id.exists': Antl.formatMessage('messages.DATA_NOT_EXITS')
     }
   }
 

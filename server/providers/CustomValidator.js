@@ -26,12 +26,6 @@ class CustomValidatorProvider extends ServiceProvider {
             if (!row) throw message
         }
 
-        // use when initialization 
-        const notExistsFn = async (data, field, message, args, get) => {
-            let row = await handleCheckExits(data, field, args, get)
-            if (row) throw message
-        }
-
         const phoneFn = async (data, field, message, args, get) => {
             let value = get(data, field)
             if (!value) return
@@ -40,7 +34,6 @@ class CustomValidatorProvider extends ServiceProvider {
         }
 
         Validator.extend('exists', existsFn)
-        Validator.extend('notExists', notExistsFn)
         Validator.extend('phone', phoneFn)
     }
 }

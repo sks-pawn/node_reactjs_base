@@ -18,7 +18,7 @@ const Route = use('Route')
 const User = use('App/Models/User')
 
 Route.get('/', async () => {
-  return await User.all()
+  return "12345"
 })
 
 Route.group(() => {
@@ -35,8 +35,6 @@ Route.group(() => {
       [['index', 'show', 'update', 'destroy'], ['auth']]
     ]))
 
-  Route.post('login', 'Admin/UserController.login')
-
   Route.delete('users', 'Admin/UserController.destroy').middleware('auth')
   Route.delete('destroy-forever', 'Admin/UserController.destroyForever').middleware('auth')
   Route.delete('destroy-forever/:id', 'Admin/UserController.destroyForever')
@@ -44,13 +42,19 @@ Route.group(() => {
     .middleware('auth')
 
   Route.post('upload', 'Admin/UploadController.avatar')
-    .middleware('auth')
     .validator('UploadImage')
+    .middleware('auth')
 
+  Route.get('locale', 'Admin/LocaleController.getLocale')
 }).prefix('admin/')
   .middleware(['country:convertEmptyData'])
   .formats(['json'], true)
 
+Route.group(() => {
+  Route.post('normal', 'Admin/LoginController.normal')
+  Route.get('facebook', 'Admin/LoginController.redirect')
+}).prefix('login/')
+  .middleware(['country:convertEmptyData'])
+  .formats(['json'], true)
 
-  Route.get('locale', 'Admin/LocaleController.getLocale')
-
+Route.get('authenticated/facebook', 'Admin/LoginController.callback')

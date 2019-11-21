@@ -3,7 +3,7 @@ import _ from 'lodash';
 
 const baseHeaders = {
     'Accept': 'application/json',
-    'Accept-Language': 'vi'
+    'Accept-Language': 'en'
 }
 
 const config = process.env.NODE_ENV === 'development' ? {

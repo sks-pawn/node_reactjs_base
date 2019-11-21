@@ -1,6 +1,6 @@
 'use strict'
+const Antl = use('Antl')
 
-const Message = use('App/Constants/Message')
 class StoreUser {
     get validateAll() {
         return true
@@ -32,17 +32,17 @@ class StoreUser {
 
     get messages() {
         return {
-            'email.required': Message.VALIDATE_REQUIRED,
-            'email.email': Message.VALIDATE_EMAIL,
-            'email.unique': Message.VALIDATE_EMAIL_UNIQUE,
-            'password.required': Message.VALIDATE_REQUIRED
+            'email.required': Antl.formatMessage('messages.VALIDATE_REQUIRED'),
+            'email.email': Antl.formatMessage('messages.VALIDATE_EMAIL'),
+            'email.unique': Antl.formatMessage('messages.VALIDATE_EMAIL_UNIQUE'),
+            'password.required': Antl.formatMessage('messages.VALIDATE_REQUIRED')
         }
     }
 
     async authorize() {
         const authorize = this.ctx.request.header('Authorization');
         if (!authorize) {
-            this.ctx.response.unauthorized(Message.ACCOUNT_NOT_AUTHORIZED)
+            this.ctx.response.unauthorized(Antl.formatMessage('messages.ACCOUNT_NOT_AUTHORIZED'))
             return false
         }
         return true

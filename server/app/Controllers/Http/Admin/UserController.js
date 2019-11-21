@@ -5,10 +5,11 @@
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
 const Event = use('Event')
+const Antl = use('Antl')
 const Status = use('App/Constants/Status')
-const Message = use('App/Constants/Message')
 const User = use('App/Models/User')
 const { LoggerPermanentException } = use('App/Helpers/Loggers')
+
 
 /**
  * Resourceful controller for interacting with users
@@ -29,7 +30,7 @@ class UserController {
         let users = await User.all()
         return response.SucessResponse(users);
       }
-      return response.BadResponseException(null, Message.PROFILE_PERMISSION_ERROR);
+      return response.BadResponseException(null, Antl.formatMessage('messages.PROFILE_PERMISSION_ERROR'));
     } catch (error) {
       LoggerPermanentException(error, request, request.post())
       return response.BadResponseException(request.post(), error.message);
@@ -82,7 +83,7 @@ class UserController {
       let { id } = params
       if (auth.user.role === 1) return response.SucessResponse(auth.user); //ADMIN
       if (auth.user.id !== Number(id)) {
-        return response.BadResponseException({ id }, Message.PROFILE_SEE_ERROR);
+        return response.BadResponseException({ id }, Antl.formatMessage('messages.PROFILE_SEE_ERROR'));
       }
       return response.SucessResponse(auth.user);
     } catch (error) {
@@ -125,7 +126,7 @@ class UserController {
         }
         return response.SucessResponse({ update });
       }
-      return response.BadResponseException({ id }, Message.PROFILE_UPDATE_ERROR);
+      return response.BadResponseException({ id }, Antl.formatMessage('messages.PROFILE_UPDATE_ERROR'));
     } catch (error) {
       LoggerPermanentException(error, request, request.post())
       return response.BadResponseException(request.post(), error.message);
@@ -151,20 +152,7 @@ class UserController {
           return response.SucessResponse(destroy);
         }
       }
-      return response.BadResponseException({ id: arr }, Message.PROFILE_PERMISSION_ERROR);
-    } catch (error) {
-      LoggerPermanentException(error, request, request.post())
-      return response.BadResponseException(request.post(), error.message);
-    }
-  }
-
-  async login({ auth, request, response }) {
-    let { email, password } = request.post()
-    try {
-      let jwt = await auth.query((builder) => {
-        builder.where('status', true)
-      }).withRefreshToken().attempt(email, password)
-      return response.SucessResponse(jwt);
+      return response.BadResponseException({ id: arr }, Antl.formatMessage('messages.PROFILE_PERMISSION_ERROR'));
     } catch (error) {
       LoggerPermanentException(error, request, request.post())
       return response.BadResponseException(request.post(), error.message);
@@ -180,7 +168,7 @@ class UserController {
         let destroy = await User.query().whereIn('id', arr).delete()
         return response.SucessResponse(destroy);
       }
-      return response.BadResponseException({ id: arr }, Message.PROFILE_PERMISSION_ERROR);
+      return response.BadResponseException({ id: arr }, Antl.formatMessage('messages.PROFILE_PERMISSION_ERROR'));
     } catch (error) {
       LoggerPermanentException(error, request, request.post())
       return response.BadResponseException(request.post(), error.message);

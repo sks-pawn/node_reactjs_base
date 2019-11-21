@@ -21,6 +21,6 @@ module.exports = {
     },
     DateRelative = (time) => {
         // new Date(year, month, day, hours, minutes, seconds, milliseconds)
-        return  Antl.formatRelative(new Date())
+        return Antl.formatRelative(new Date())
     }
 }
