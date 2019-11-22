@@ -2,7 +2,7 @@
 
 /** @type {import('@adonisjs/framework/src/Server')} */
 const Server = use('Server')
-
+const fs = require('fs');
 /*
 |--------------------------------------------------------------------------
 | Global Middleware
@@ -37,13 +37,21 @@ const globalMiddleware = [
 | Route.get().middleware('auth')
 |
 */
-const namedMiddleware = {
+let namedMiddleware = {
   auth: 'Adonis/Middleware/Auth',
-  guest: 'Adonis/Middleware/AllowGuestOnly',
-  country: 'App/Middleware/CountryDetector',
-  convertEmptyData: 'App/Middleware/ConvertEmptyStringsToNull'
-
+  guest: 'Adonis/Middleware/AllowGuestOnly'
 }
+
+let folder = 'App/Middleware'
+fs.readdirSync(folder).forEach(file => {
+  let name = file.slice(0, -3);
+  let key = file.charAt(0).toLowerCase() + file.slice(1, -3);
+  namedMiddleware = {
+    ...namedMiddleware, ...{
+      [key]: folder + "/" + name
+    }
+  }
+});
 
 /*
 |--------------------------------------------------------------------------

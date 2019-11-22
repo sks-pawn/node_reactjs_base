@@ -16,6 +16,8 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 const User = use('App/Models/User')
+const Env = use('Env')
+const socialAuthen = Env.get('SOCIAL_AUTHENTICATION')
 
 Route.get('/', async () => {
   return "12345"
@@ -34,27 +36,28 @@ Route.group(() => {
     .middleware(new Map([
       [['index', 'show', 'update', 'destroy'], ['auth']]
     ]))
+  Route.post('normal', 'Admin/LoginController.normal')
 
   Route.delete('users', 'Admin/UserController.destroy').middleware('auth')
   Route.delete('destroy-forever', 'Admin/UserController.destroyForever').middleware('auth')
   Route.delete('destroy-forever/:id', 'Admin/UserController.destroyForever')
     .validator('ParamIsExits')
     .middleware('auth')
-
   Route.post('upload', 'Admin/UploadController.avatar')
     .validator('UploadImage')
     .middleware('auth')
-
-  Route.get('locale', 'Admin/LocaleController.getLocale')
 }).prefix('admin/')
-  .middleware(['country:convertEmptyData'])
+  .middleware(['countryDetector:convertEmptyStringsToNull'])
   .formats(['json'], true)
 
-Route.group(() => {
-  Route.post('normal', 'Admin/LoginController.normal')
-  Route.get('facebook', 'Admin/LoginController.redirect')
-}).prefix('login/')
-  .middleware(['country:convertEmptyData'])
-  .formats(['json'], true)
-
-Route.get('authenticated/facebook', 'Admin/LoginController.callback')
+if (socialAuthen) {
+  let listSocial = socialAuthen.split(",")
+  Route.group(() => {
+    return listSocial.map(element => Route.get(element, 'Admin/LoginController.redirect'));
+  }).prefix('login/')
+    .middleware('socialAuthenticationForRequest')
+  Route.group(() => {
+    return listSocial.map(element => Route.get(element, 'Admin/LoginController.callback'));
+  }).prefix('authenticated/')
+    .middleware('socialAuthenticationForRequest')
+}

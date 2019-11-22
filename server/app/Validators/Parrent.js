@@ -34,7 +34,7 @@ class StoreUser {
         return {
             'email.required': Antl.formatMessage('messages.VALIDATE_REQUIRED'),
             'email.email': Antl.formatMessage('messages.VALIDATE_EMAIL'),
-            'email.unique': Antl.formatMessage('messages.VALIDATE_EMAIL_UNIQUE'),
+            'email.unique': Antl.formatMessage('messages.VALIDATE_FIELD_UNIQUE', { field: "email" }),
             'password.required': Antl.formatMessage('messages.VALIDATE_REQUIRED')
         }
     }
@@ -42,7 +42,7 @@ class StoreUser {
     async authorize() {
         const authorize = this.ctx.request.header('Authorization');
         if (!authorize) {
-            this.ctx.response.unauthorized(Antl.formatMessage('messages.ACCOUNT_NOT_AUTHORIZED'))
+            this.ctx.response.unauthorized(Antl.formatMessage('messages.PROFILE_ACCOUNT_NOT_AUTHORIZED'))
             return false
         }
         return true

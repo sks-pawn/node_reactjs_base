@@ -1,5 +1,5 @@
 'use strict'
-
+const Antl = use('Antl')
 class UserStore {
   get validateAll() {
     return true
@@ -26,6 +26,13 @@ class UserStore {
         phone: 'required|phone|unique:users,phone',
         gender: 'required|boolean'
       }
+    }
+  }
+
+  get messages() {
+    return {
+      'email.unique': Antl.formatMessage('messages.VALIDATE_FIELD_UNIQUE', { field: "email" }),
+      'phone.unique': Antl.formatMessage('messages.VALIDATE_FIELD_UNIQUE', { field: "phone" })
     }
   }
 

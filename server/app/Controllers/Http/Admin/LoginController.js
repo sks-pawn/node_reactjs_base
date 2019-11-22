@@ -11,22 +11,22 @@ class LoginController {
             let jwt = await auth.query((builder) => {
                 builder.where('status', true)
             }).withRefreshToken().attempt(email, password)
-            return response.SucessResponse(jwt);
+            return response.SucessResponse({ jwt, user: auth.user });
         } catch (error) {
             LoggerPermanentException(error, request, request.post())
             return response.BadResponseException(request.post(), error.message);
         }
     }
 
-    async redirect({ ally }) {
-        await ally.driver('facebook').redirect()
+    async redirect({ ally, request }) {
+        await ally.driver(request.socialAuthen).redirect()
     }
 
     async callback({ ally, auth, request, response }) {
         try {
-            const fbUser = await ally.driver('facebook').getUser()
+            const fbUser = await ally.driver(request.socialAuthen).getUser()
             let userDetails = {
-                login_source: 'facebook',
+                login_source: request.socialAuthen,
                 first_name: fbUser.getName(),
                 last_name: fbUser.getNickname(),
                 avatar: fbUser.getAvatar(),
@@ -55,10 +55,10 @@ class LoginController {
                 return response.BadResponseException(null, Antl.formatMessage('messages.PROFILE_NOT_ACTIVE'));
             }
             let jwt = await auth.withRefreshToken().generate(user)
-            return response.SucessResponse(jwt);
+            return response.SucessResponse({ jwt, user });
         } catch (error) {
             LoggerPermanentException(error, request, request.post())
-            return response.BadResponseException(request.post(), Antl.formatMessage('messages.ACCOUNT_NOT_AUTHENTICATE'));
+            return response.BadResponseException(request.post(), Antl.formatMessage('messages.PROFILE_ACCOUNT_NOT_AUTHENTICATE'));
         }
     }
 }
