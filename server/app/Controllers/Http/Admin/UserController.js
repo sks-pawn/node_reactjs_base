@@ -61,7 +61,7 @@ class UserController {
     try {
       let body = request.post()
       let user = await User.create(body)
-      if (user) Event.fire('user::registered', user)
+      if (user) Event.fire('user::sendMailNewAccount', user)
       return response.SucessResponse(user, null, Status.Created);
     } catch (error) {
       LoggerPermanentException(error, request, request.post())

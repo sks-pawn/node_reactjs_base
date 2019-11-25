@@ -1,3 +1,3 @@
 const Event = use('Event')
 
-Event.on('user::registered', 'User.registered')
+Event.on('user::sendMailNewAccount', 'User.sendMailNewAccount')

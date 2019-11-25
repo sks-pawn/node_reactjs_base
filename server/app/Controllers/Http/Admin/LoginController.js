@@ -1,5 +1,6 @@
 'use strict'
 const Antl = use('Antl')
+const Event = use('Event')
 const User = use('App/Models/User')
 const { validate } = use('Validator')
 const { LoggerPermanentException } = use('App/Helpers/Loggers')
@@ -50,6 +51,7 @@ class LoginController {
                         status: 1
                     }
                 })
+                Event.fire('user::sendMailNewAccount', user)
             }
             if (!user.status) {
                 return response.BadResponseException(null, Antl.formatMessage('messages.PROFILE_NOT_ACTIVE'));

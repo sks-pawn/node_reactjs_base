@@ -36,7 +36,7 @@ Route.group(() => {
     .middleware(new Map([
       [['index', 'show', 'update', 'destroy'], ['auth']]
     ]))
-  Route.post('normal', 'Admin/LoginController.normal')
+  Route.post('login', 'Admin/LoginController.normal')
 
   Route.delete('users', 'Admin/UserController.destroy').middleware('auth')
   Route.delete('destroy-forever', 'Admin/UserController.destroyForever').middleware('auth')
