@@ -81,11 +81,17 @@ class UserController {
   async show({ auth, params, request, response }) {
     try {
       let { id } = params
-      if (auth.user.role === 1) return response.SucessResponse(auth.user); //ADMIN
+      if (auth.user.role === 1) {
+        //ADMIN
+        let result = await User.find(id)
+        await result.load('relationshipSchedule')
+        return response.SucessResponse(result.toJSON());
+      }
       if (auth.user.id !== Number(id)) {
         return response.BadResponseException({ id }, Antl.formatMessage('messages.PROFILE_SEE_ERROR'));
       }
-      return response.SucessResponse(auth.user);
+      await auth.user.load('relationshipSchedule')
+      return response.SucessResponse(auth.user.toJSON());
     } catch (error) {
       LoggerPermanentException(error, request, request.post())
       return response.BadResponseException(request.post(), error.message);
@@ -123,6 +129,7 @@ class UserController {
           let user = await User.find(id)
           user.password = body.password
           await user.save()
+          Event.fire('user::sendMailChangePassword', user.toJSON())
         }
         return response.SucessResponse({ update });
       }
@@ -148,8 +155,10 @@ class UserController {
       let arr = id ? [id] : data.id
       if (auth.user.role === 1 || auth.user.id === Number(id)) {
         if (id || data.id.length) {
-          let destroy = await User.query().whereIn('id', arr).update({ status: false })
-          return response.SucessResponse(destroy);
+          let result = await User.query().whereIn('id', arr).update({ status: false })
+
+          // Event.fire('user::sendMailChangePassword', user.toJSON())
+          return response.SucessResponse(result);
         }
       }
       return response.BadResponseException({ id: arr }, Antl.formatMessage('messages.PROFILE_PERMISSION_ERROR'));

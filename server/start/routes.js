@@ -36,16 +36,17 @@ Route.group(() => {
     .middleware(new Map([
       [['index', 'show', 'update', 'destroy'], ['auth']]
     ]))
-  Route.post('login', 'Admin/LoginController.normal')
-
   Route.delete('users', 'Admin/UserController.destroy').middleware('auth')
   Route.delete('destroy-forever', 'Admin/UserController.destroyForever').middleware('auth')
   Route.delete('destroy-forever/:id', 'Admin/UserController.destroyForever')
     .validator('ParamIsExits')
     .middleware('auth')
+
+  Route.post('login', 'Admin/LoginController.normal')
   Route.post('upload', 'Admin/UploadController.avatar')
     .validator('UploadImage')
     .middleware('auth')
+
 }).prefix('admin/')
   .middleware(['countryDetector:convertEmptyStringsToNull'])
   .formats(['json'], true)
