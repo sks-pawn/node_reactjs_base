@@ -22,9 +22,9 @@ class User extends Model {
   /**
     * Getter
     */
-  getEmail(email) {
-    return email.toUpperCase()
-  }
+  // getEmail(email) {
+  //   return email.toUpperCase()
+  // }
   getFullname({ first_name, last_name }) {
     return `${first_name} ${last_name}`
   }
@@ -36,6 +36,16 @@ class User extends Model {
   //   return access === 'admin' ? 1 : 0
   // }
 
+  /**Query Scopes */
+  static scopeHasRelaRole(query) {
+    return query.has('relaRole')
+    /**
+      * Usage: 
+      * Tìm tất cả user có role.
+      * // await User.query().hasRelaRole().fetch()
+      */
+  }
+
   /**
    * A relationship on tokens is required for auth to
    * work. Since features like `refreshTokens` or
@@ -46,12 +56,26 @@ class User extends Model {
    *
    * @return {Object}
    */
-
-  // findRole() {
-  //   return this.hasOne('App/Models/Role')
-  // }
-  relationshipSchedule() {
+  tokens() {
+    return this.hasMany('App/Models/Token')
+  }
+  relaRole() {
+    /**
+      * Usage: 
+      * Get role tương ứng user.
+      * // await user.relaRole().fetch()
+      * or
+      * await user.load('relaRole')
+      */
+    return this.hasOne('App/Models/Role', 'role', 'id')
+  }
+  relaSchedules() {
     return this.hasMany('App/Models/Schedule')
+  }
+  relaCars() {
+    return this.belongsToMany('App/Models/Car')
+      .pivotTable('users_cars')
+      .withPivot(['status'])
   }
 }
 

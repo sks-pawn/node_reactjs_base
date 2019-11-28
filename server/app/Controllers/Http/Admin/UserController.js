@@ -61,8 +61,8 @@ class UserController {
     try {
       let body = request.post()
       let user = await User.create(body)
-      if (user) Event.fire('user::sendMailNewAccount', user)
-      return response.SucessResponse(user, null, Status.Created);
+      if (user) Event.fire('user::sendMailNewAccount', user.toJSON())
+      return response.SucessResponse(user.toJSON(), null, Status.Created);
     } catch (error) {
       LoggerPermanentException(error, request, request.post())
       return response.BadResponseException(request.post(), error.message);
@@ -82,15 +82,16 @@ class UserController {
     try {
       let { id } = params
       if (auth.user.role === 1) {
-        //ADMIN
         let result = await User.find(id)
-        await result.load('relationshipSchedule')
+        await result.load('relaRole')
+        await result.load('relaSchedules')
+        await result.load('relaCars')
         return response.SucessResponse(result.toJSON());
       }
       if (auth.user.id !== Number(id)) {
         return response.BadResponseException({ id }, Antl.formatMessage('messages.PROFILE_SEE_ERROR'));
       }
-      await auth.user.load('relationshipSchedule')
+      await auth.user.load('relaSchedules')
       return response.SucessResponse(auth.user.toJSON());
     } catch (error) {
       LoggerPermanentException(error, request, request.post())
@@ -122,7 +123,6 @@ class UserController {
     try {
       let { id } = params;
       let body = request.post()
-      //ADMIN hoặc chính nó
       if (auth.user.role === 1 || auth.user.id === Number(id)) {
         let update = await User.query().where('id', id).update(body)
         if (body.password) {
@@ -131,7 +131,7 @@ class UserController {
           await user.save()
           Event.fire('user::sendMailChangePassword', user.toJSON())
         }
-        return response.SucessResponse({ update });
+        return response.SucessResponse(update);
       }
       return response.BadResponseException({ id }, Antl.formatMessage('messages.PROFILE_UPDATE_ERROR'));
     } catch (error) {
@@ -156,8 +156,10 @@ class UserController {
       if (auth.user.role === 1 || auth.user.id === Number(id)) {
         if (id || data.id.length) {
           let result = await User.query().whereIn('id', arr).update({ status: false })
-
-          // Event.fire('user::sendMailChangePassword', user.toJSON())
+          let users = await User.query().whereIn('id', arr).fetch()
+          users.toJSON().forEach(element => {
+            Event.fire('user::sendMailDisabledAccount', element)
+          })
           return response.SucessResponse(result);
         }
       }
@@ -174,6 +176,10 @@ class UserController {
       let data = request.post();
       let arr = id ? [id] : data.id
       if (auth.user.role === 1 && (id || data.id.length)) {
+        let users = await User.query().whereIn('id', arr).fetch()
+        users.toJSON().forEach(element => {
+          Event.fire('user::sendMailDeleteAccount', element)
+        })
         let destroy = await User.query().whereIn('id', arr).delete()
         return response.SucessResponse(destroy);
       }

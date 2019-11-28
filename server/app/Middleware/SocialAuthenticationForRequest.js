@@ -12,9 +12,8 @@ class SocialAuthenticationForRequest {
     async handle({ request }, next) {
         // call next to advance the request
         let r = request.url()
-        request.socialAuthen = r.slice(r.lastIndexOf("/") + 1).replace(".json", "")
+        request.socialAuthen = r.slice(r.lastIndexOf("/") + 1).replace(/[.json]|[.html]/gi, "");
         await next()
     }
 }
-
 module.exports = SocialAuthenticationForRequest
