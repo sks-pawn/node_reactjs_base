@@ -11,8 +11,13 @@ class SocialAuthenticationForRequest {
      */
     async handle({ request }, next) {
         // call next to advance the request
-        let r = request.url()
-        request.socialAuthen = r.slice(r.lastIndexOf("/") + 1).replace(/[.json]|[.html]/gi, "");
+        let arr = [".json", ".html"]
+        let url = request.url()
+        request.socialAuthen = url.slice(url.lastIndexOf("/") + 1)
+        arr.forEach(e => {
+            request.socialAuthen = request.socialAuthen.replace(e, "")
+        })
+
         await next()
     }
 }

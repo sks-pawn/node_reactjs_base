@@ -62,3 +62,12 @@ if (socialAuthen) {
   }).prefix('authenticated/')
     .middleware('socialAuthenticationForRequest')
 }
+
+const Post = use('App/Models/Post')
+Route.post('ttt', async ({ request }) => {
+  let body = request.post()
+  console.log('body :', body);
+  console.log(request.hasBody());
+  return body
+  // await Post.createMany(body)
+}).formats(['json'], true)
