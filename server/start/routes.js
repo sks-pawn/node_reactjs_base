@@ -34,10 +34,11 @@ Route.group(() => {
       [['destroy'], ['ParamIsExits']]
     ]))
     .middleware(new Map([
-      [['index', 'show', 'update', 'destroy'], ['auth']]
+      [['index', 'show', 'update', 'destroy'], ['auth']],
+      [['store', 'update'], ['bodyIsInvalid']]
     ]))
-  Route.delete('users', 'Admin/UserController.destroy').middleware('auth')
-  Route.delete('destroy-forever', 'Admin/UserController.destroyForever').middleware('auth')
+  Route.delete('users', 'Admin/UserController.destroy').middleware(['auth:bodyIsInvalid'])
+  Route.delete('destroy-forever', 'Admin/UserController.destroyForever').middleware(['auth:bodyIsInvalid'])
   Route.delete('destroy-forever/:id', 'Admin/UserController.destroyForever')
     .validator('ParamIsExits')
     .middleware('auth')
@@ -65,9 +66,8 @@ if (socialAuthen) {
 
 const Post = use('App/Models/Post')
 Route.post('ttt', async ({ request }) => {
-  let body = request.post()
-  console.log('body :', body);
-  console.log(request.hasBody());
+  let body = request.GetBodyArray;
+  await Post.createMany(body)
   return body
-  // await Post.createMany(body)
-}).formats(['json'], true)
+}).middleware(['bodyIsInvalid:convertEmptyStringsToNull'])
+  .formats(['json'], true)

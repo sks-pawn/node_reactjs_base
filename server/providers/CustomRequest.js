@@ -1,4 +1,6 @@
 const { ServiceProvider } = require('@adonisjs/fold')
+const _ = require('lodash')
+
 class CustomRequestProvider extends ServiceProvider {
     boot() {
         const Antl = use('Antl')
@@ -10,6 +12,12 @@ class CustomRequestProvider extends ServiceProvider {
 
         Request.getter('GetTime', function () {
             return Antl.formatDate(new Date())
+        })
+        Request.getter('HasBody', function () {
+            return !_.isEmpty(this.all())
+        })
+        Request.getter('GetBodyArray', function () {
+            return _.map(this.all(), val => val);
         })
     }
 }
