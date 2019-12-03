@@ -4,6 +4,9 @@
 const Model = use('Model')
 
 class Post extends Model {
+    relaUser() {
+        return this.belongsTo('App/Models/User')
+    }
 }
 
 module.exports = Post

@@ -59,14 +59,20 @@ class User extends Model {
   tokens() {
     return this.hasMany('App/Models/Token')
   }
-  relaRole() {
-    /**
+
+  /**
       * Usage: 
       * Get role tương ứng user.
       * // await user.relaRole().fetch()
       * or
       * await user.load('relaRole')
+      * or
+      * await Countrie.query().with('relaUsers.relaPosts').fetch()
       */
+  relaCountrie() {
+    return this.belongsTo('App/Models/Countrie')
+  }
+  relaRole() {
     return this.hasOne('App/Models/Role', 'role', 'id')
   }
   relaSchedules() {
@@ -76,6 +82,9 @@ class User extends Model {
     return this.belongsToMany('App/Models/Car')
       .pivotTable('users_cars')
       .withPivot(['status'])
+  }
+  relaPosts() {
+    return this.hasMany('App/Models/Post')
   }
 }
 

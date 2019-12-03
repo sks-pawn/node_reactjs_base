@@ -58,3 +58,26 @@ if (auth.user.id === Number(id)) {
     let jwt = await auth.withRefreshToken().generate(auth.user)
     return SucessResponse(response, { jwt, update });
 }
+
+
+
+const users = await User.query().with('relaPosts').fetch()
+const users = await User.query().with('relaPosts', (builder) => {
+    builder.where('status', true)
+}).fetch()
+// get tất cả post trong 1 địa phương
+const users = await Countrie.query().with('relaUsers.relaPosts').fetch()
+// get model đã đc load
+return user.getRelated('relaPosts')
+// create post dựa vào user
+await user.relaPosts().create({
+    title: 'Adonis 101'
+})
+
+// thay đổi id liên kết
+const countrie = await Countrie.find(1)
+const user = await User.find(1)
+await user.relaCountrie().associate(countrie)
+
+//drop liên kết
+await profile.user().dissociate()

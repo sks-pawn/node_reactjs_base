@@ -12,10 +12,10 @@ class BodyIsInvalid {
    * @param {Function} next
    */
   async handle({ request }, next) {
-    if (!_.isEmpty(request.all())) {
-
-      await next()
+    if (_.isEmpty(request.all())) {
+      throw new Error('Body invalid')
     }
+    await next()
   }
 }
 

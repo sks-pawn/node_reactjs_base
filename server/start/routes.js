@@ -15,7 +15,6 @@
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
-const User = use('App/Models/User')
 const Env = use('Env')
 const socialAuthen = Env.get('SOCIAL_AUTHENTICATION')
 
@@ -64,10 +63,24 @@ if (socialAuthen) {
     .middleware('socialAuthenticationForRequest')
 }
 
+const User = use('App/Models/User')
+const Countrie = use('App/Models/Countrie')
+const Schedule = use('App/Models/Schedule')
 const Post = use('App/Models/Post')
+const Role = use('App/Models/Role')
+const Car = use('App/Models/Car')
+
+
+
 Route.post('ttt', async ({ request }) => {
-  let body = request.GetBodyArray;
-  await Post.createMany(body)
-  return body
+  try {
+    const user = await User.find(5)
+    const mercedes = await Car.find(1)
+    // await user.relaCars().attach(mercedes.id)
+    await user.relaCars().attach([mercedes.id])
+  } catch (error) {
+    throw error
+  }
+
 }).middleware(['bodyIsInvalid:convertEmptyStringsToNull'])
   .formats(['json'], true)

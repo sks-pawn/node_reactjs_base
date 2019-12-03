@@ -4,7 +4,6 @@
 const Model = use('Model')
 
 class Schedule extends Model {
-
     relaUser() {
         return this.belongsTo('App/Models/User')
     }

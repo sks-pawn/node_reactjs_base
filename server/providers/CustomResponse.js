@@ -13,6 +13,7 @@ class CustomResponseProvider extends ServiceProvider {
             if (!status) status = 400
             this.status(status).json({
                 error: {
+                    name: "Error-Validator",
                     message,
                     status,
                     data,
@@ -26,6 +27,7 @@ class CustomResponseProvider extends ServiceProvider {
             if (!status) status = 400
             this.status(status).json({
                 error: {
+                    name: "Error-Upload",
                     message,
                     status,
                     data,
@@ -39,6 +41,7 @@ class CustomResponseProvider extends ServiceProvider {
             if (!status) status = 400
             this.status(status).json({
                 error: {
+                    name: "Error",
                     message,
                     status,
                     data
@@ -51,6 +54,7 @@ class CustomResponseProvider extends ServiceProvider {
             if (!status) status = 200
             this.status(status).json({
                 success: {
+                    name: "Sucess",
                     message,
                     status,
                     data

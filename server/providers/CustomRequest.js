@@ -17,7 +17,8 @@ class CustomRequestProvider extends ServiceProvider {
             return !_.isEmpty(this.all())
         })
         Request.getter('GetBodyArray', function () {
-            return _.map(this.all(), val => val);
+            if (!_.isEmpty(this.all())) return _.map(this.all(), val => val);
+            return null
         })
     }
 }

@@ -4,7 +4,6 @@
 const Model = use('Model')
 
 class Token extends Model {
-
     relaUser() {
         return this.belongsTo('App/Models/User')
     }
