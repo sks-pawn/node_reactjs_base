@@ -12,10 +12,10 @@ class LoginController {
             let jwt = await auth.query((builder) => {
                 builder.where('status', true)
             }).withRefreshToken().attempt(email, password)
-            return response.SucessResponse({ jwt, user: auth.user });
+            return response.sucessResponseFn({ jwt, user: auth.user });
         } catch (error) {
             LoggerPermanentException(error, request, request.post())
-            return response.BadResponseException(request.post(), error.message);
+            return response.badResponseExceptionFn(request.post(), error.message);
         }
     }
 
@@ -54,13 +54,13 @@ class LoginController {
                 Event.fire('user::sendMailNewAccount', user)
             }
             if (!user.status) {
-                return response.BadResponseException(null, Antl.formatMessage('messages.PROFILE_NOT_ACTIVE'));
+                return response.badResponseExceptionFn(null, Antl.formatMessage('messages.PROFILE_NOT_ACTIVE'));
             }
             let jwt = await auth.withRefreshToken().generate(user)
-            return response.SucessResponse({ jwt, user });
+            return response.sucessResponseFn({ jwt, user });
         } catch (error) {
             LoggerPermanentException(error, request, request.post())
-            return response.BadResponseException(request.post(), Antl.formatMessage('messages.PROFILE_ACCOUNT_NOT_AUTHENTICATE'));
+            return response.badResponseExceptionFn(request.post(), Antl.formatMessage('messages.PROFILE_ACCOUNT_NOT_AUTHENTICATE'));
         }
     }
 }

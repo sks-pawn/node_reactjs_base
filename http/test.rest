@@ -1,0 +1,18 @@
+POST http://localhost:3333/ttt.json
+Host: localhost:3333
+Connection: keep-alive
+Accept: application/json
+Origin: http://localhost:3000
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36
+DNT: 1
+content-Type: application/json
+Sec-Fetch-Site: same-site
+Sec-Fetch-Mode: cors
+Referer: http://localhost:3000/blog
+Accept-Encoding: gzip, deflate, br
+Accept-Language: vi,en;q=0.9
+
+[
+	{"a" : 1}
+]
+

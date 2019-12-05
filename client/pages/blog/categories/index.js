@@ -6,20 +6,19 @@ import Api from '~/ultils/apiCaller'
 
 class MyPage extends Component {
   async componentDidMount() {
-    try {
-      let result = await Api.get("/admin/users/1", {
-        "email": "anhthanh1996vp@gmail.com",
-        "password": "ass"
-      });
-      if (result && result.data) {
-        console.log(result.data)
-      }
-    } catch (error) {
-      if (error && error.data) {
-        console.log(error.data)
-      }
-    }
-
+    // try {
+    //   let result = await Api.post("/ttt", {
+    //     "email": "anhthanh1996vp@gmail.com",
+    //     "password": "ass"
+    //   }, false);
+    //   if (result && result.data) {
+    //     console.log(result.data)
+    //   }
+    // } catch (error) {
+    //   if (error && error.data) {
+    //     console.log(error.data)
+    //   }
+    // }
   }
   render() {
     return (

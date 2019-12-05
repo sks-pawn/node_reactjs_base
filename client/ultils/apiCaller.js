@@ -1,9 +1,9 @@
 import ApiConfig from './config';
 
 export default {
-    get: (endPoint, payload, headers, fomats) => { return ApiConfig(endPoint, payload, 'GET', headers, fomats) },
-    post: (endPoint, payload, headers, fomats) => { return ApiConfig(endPoint, payload, 'POST', headers, fomats) },
-    put: (endPoint, payload, headers, fomats) => { return ApiConfig(endPoint, payload, 'PUT', headers, fomats) },
-    patch: (endPoint, payload, headers, fomats) => { return ApiConfig(endPoint, payload, 'PATCH', headers, fomats) },
-    delete: (endPoint, payload, headers, fomats) => { return ApiConfig(endPoint, payload, 'DELETE', headers, fomats) }
+    get: (endPoint, payload, fomats, headers) => { return ApiConfig(endPoint, payload, 'GET', fomats, headers) },
+    post: (endPoint, payload, fomats, headers) => { return ApiConfig(endPoint, payload, 'POST', fomats, headers) },
+    put: (endPoint, payload, fomats, headers) => { return ApiConfig(endPoint, payload, 'PUT', fomats, headers) },
+    patch: (endPoint, payload, fomats, headers) => { return ApiConfig(endPoint, payload, 'PATCH', fomats, headers) },
+    delete: (endPoint, payload, fomats, headers) => { return ApiConfig(endPoint, payload, 'DELETE', fomats, headers) }
 };

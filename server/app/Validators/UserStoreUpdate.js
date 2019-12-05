@@ -37,7 +37,7 @@ class UserStore {
   }
 
   async fails(errorMessages) {
-    return this.ctx.response.BadValidatorException(errorMessages)
+    return this.ctx.response.badValidatorExceptionFn(errorMessages)
   }
 }
 

@@ -28,12 +28,12 @@ class UserController {
     try {
       if (auth.user.role === 1) {
         let users = await User.all()
-        return response.SucessResponse(users);
+        return response.sucessResponseFn(users);
       }
-      return response.BadResponseException(null, Antl.formatMessage('messages.PROFILE_PERMISSION_ERROR'));
+      return response.badResponseExceptionFn(null, Antl.formatMessage('messages.PROFILE_PERMISSION_ERROR'));
     } catch (error) {
       LoggerPermanentException(error, request, request.post())
-      return response.BadResponseException(request.post(), error.message);
+      return response.badResponseExceptionFn(request.post(), error.message);
     }
   }
 
@@ -62,10 +62,10 @@ class UserController {
       let body = request.post()
       let user = await User.create(body)
       if (user) Event.fire('user::sendMailNewAccount', user.toJSON())
-      return response.SucessResponse(user.toJSON(), null, Status.Created);
+      return response.sucessResponseFn(user.toJSON(), null, Status.Created);
     } catch (error) {
       LoggerPermanentException(error, request, request.post())
-      return response.BadResponseException(request.post(), error.message);
+      return response.badResponseExceptionFn(request.post(), error.message);
     }
   }
 
@@ -86,16 +86,16 @@ class UserController {
         await result.load('relaRole')
         await result.load('relaSchedules')
         await result.load('relaCars')
-        return response.SucessResponse(result.toJSON());
+        return response.sucessResponseFn(result.toJSON());
       }
       if (auth.user.id !== Number(id)) {
-        return response.BadResponseException({ id }, Antl.formatMessage('messages.PROFILE_SEE_ERROR'));
+        return response.badResponseExceptionFn({ id }, Antl.formatMessage('messages.PROFILE_SEE_ERROR'));
       }
       await auth.user.load('relaSchedules')
-      return response.SucessResponse(auth.user.toJSON());
+      return response.sucessResponseFn(auth.user.toJSON());
     } catch (error) {
       LoggerPermanentException(error, request, request.post())
-      return response.BadResponseException(request.post(), error.message);
+      return response.badResponseExceptionFn(request.post(), error.message);
     }
   }
 
@@ -131,12 +131,12 @@ class UserController {
           await user.save()
           Event.fire('user::sendMailChangePassword', user.toJSON())
         }
-        return response.SucessResponse(update);
+        return response.sucessResponseFn(update);
       }
-      return response.BadResponseException({ id }, Antl.formatMessage('messages.PROFILE_UPDATE_ERROR'));
+      return response.badResponseExceptionFn({ id }, Antl.formatMessage('messages.PROFILE_UPDATE_ERROR'));
     } catch (error) {
       LoggerPermanentException(error, request, request.post())
-      return response.BadResponseException(request.post(), error.message);
+      return response.badResponseExceptionFn(request.post(), error.message);
     }
   }
 
@@ -160,13 +160,13 @@ class UserController {
           users.toJSON().forEach(element => {
             Event.fire('user::sendMailDisabledAccount', element)
           })
-          return response.SucessResponse(result);
+          return response.sucessResponseFn(result);
         }
       }
-      return response.BadResponseException({ id: arr }, Antl.formatMessage('messages.PROFILE_PERMISSION_ERROR'));
+      return response.badResponseExceptionFn({ id: arr }, Antl.formatMessage('messages.PROFILE_PERMISSION_ERROR'));
     } catch (error) {
       LoggerPermanentException(error, request, request.post())
-      return response.BadResponseException(request.post(), error.message);
+      return response.badResponseExceptionFn(request.post(), error.message);
     }
   }
 
@@ -181,12 +181,12 @@ class UserController {
           Event.fire('user::sendMailDeleteAccount', element)
         })
         let destroy = await User.query().whereIn('id', arr).delete()
-        return response.SucessResponse(destroy);
+        return response.sucessResponseFn(destroy);
       }
-      return response.BadResponseException({ id: arr }, Antl.formatMessage('messages.PROFILE_PERMISSION_ERROR'));
+      return response.badResponseExceptionFn({ id: arr }, Antl.formatMessage('messages.PROFILE_PERMISSION_ERROR'));
     } catch (error) {
       LoggerPermanentException(error, request, request.post())
-      return response.BadResponseException(request.post(), error.message);
+      return response.badResponseExceptionFn(request.post(), error.message);
     }
   }
 }

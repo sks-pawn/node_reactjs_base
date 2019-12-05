@@ -8,7 +8,7 @@ class CustomResponseProvider extends ServiceProvider {
         // Adonis/Src/HttpContext
         // Adonis/Src/Route
 
-        Response.macro('BadValidatorException', function (data = null, message = "Error-Validator", status = 400) {
+        Response.macro('badValidatorExceptionFn', function (data = null, message = "Error-Validator", status = 400) {
             if (!message) message = "Error-Validator"
             if (!status) status = 400
             this.status(status).json({
@@ -22,7 +22,7 @@ class CustomResponseProvider extends ServiceProvider {
             })
         })
 
-        Response.macro('BadUploadException', function (data = null, message = "Error-Upload", status = 400) {
+        Response.macro('badUploadExceptionFn', function (data = null, message = "Error-Upload", status = 400) {
             if (!message) message = "Error-Upload"
             if (!status) status = 400
             this.status(status).json({
@@ -36,7 +36,7 @@ class CustomResponseProvider extends ServiceProvider {
             })
         })
 
-        Response.macro('BadResponseException', function (data = null, message = "Error", status = 400) {
+        Response.macro('badResponseExceptionFn', function (data = null, message = "Error", status = 400) {
             if (!message) message = "Error"
             if (!status) status = 400
             this.status(status).json({
@@ -49,7 +49,7 @@ class CustomResponseProvider extends ServiceProvider {
             })
         })
 
-        Response.macro('SucessResponse', function (data = null, message = "Sucess", status = 200) {
+        Response.macro('sucessResponseFn', function (data = null, message = "Sucess", status = 200) {
             if (!message) message = "Sucess"
             if (!status) status = 200
             this.status(status).json({

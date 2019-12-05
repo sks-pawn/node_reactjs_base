@@ -23,7 +23,7 @@ class ParamIsExits {
   }
 
   async fails(errorMessages) {
-    this.ctx.response.BadValidatorException(errorMessages)
+    this.ctx.response.badValidatorExceptionFn(errorMessages)
   }
 }
 

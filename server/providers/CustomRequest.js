@@ -10,13 +10,13 @@ class CustomRequestProvider extends ServiceProvider {
         // Adonis/Src/HttpContext
         // Adonis/Src/Route
 
-        Request.getter('GetTime', function () {
+        Request.getter('getTimeFn', function () {
             return Antl.formatDate(new Date())
         })
-        Request.getter('HasBody', function () {
+        Request.getter('hasBodyFn', function () {
             return !_.isEmpty(this.all())
         })
-        Request.getter('GetBodyArray', function () {
+        Request.getter('bodyToArrayFn', function () {
             if (!_.isEmpty(this.all())) return _.map(this.all(), val => val);
             return null
         })

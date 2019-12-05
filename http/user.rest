@@ -1,0 +1,33 @@
+POST http://localhost:3333/admin/login.json
+Host: localhost:3333
+Connection: keep-alive
+Accept: application/json
+Origin: http://localhost:3000
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36
+DNT: 1
+Content-Type: application/json;charset=utf-8
+Sec-Fetch-Site: same-site
+Sec-Fetch-Mode: cors
+Referer: http://localhost:3000/blog
+Accept-Encoding: gzip, deflate, br
+Accept-Language: vi,en;q=0.9
+
+{
+	"email": "admin3@gmail.com",
+	"password": "123123"
+}
+
+### 
+PUT http://localhost:3333/admin/users/67.json
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjUsImlhdCI6MTU3NTUzNzY3OSwiZXhwIjoxNTc1NzEwNDc5fQ.IGuZ6YsTusoBRcoERYRk1tmUMi-oao7QGLv6pnU6cBM
+
+{
+	"password": "234234",
+	"status": 1,
+	"first_name": "Anh Thành",
+	  "last_name": "last name",
+	  "role": 1,
+	  "phone": "0925151251",
+	  "gender": 1
+}

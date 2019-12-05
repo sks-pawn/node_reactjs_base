@@ -9,7 +9,7 @@ class UploadFile {
     }
 
     async fails(errorMessages) {
-        return this.ctx.response.BadUploadException(errorMessages)
+        return this.ctx.response.badUploadExceptionFn(errorMessages)
     }
 }
 

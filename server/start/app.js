@@ -25,7 +25,8 @@ const providers = [
   '@adonisjs/framework/providers/ViewProvider',
   '@adonisjs/mail/providers/MailProvider',
   '@adonisjs/antl/providers/AntlProvider',
-  '@adonisjs/ally/providers/AllyProvider'
+  '@adonisjs/ally/providers/AllyProvider',
+  '@adonisjs/websocket/providers/WsProvider'
   // '@adonisjs/shield/providers/ShieldProvider',
   // '@adonisjs/drive/providers/DriveProvider',
 ]

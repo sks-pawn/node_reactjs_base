@@ -42,7 +42,7 @@ Route.group(() => {
     .validator('ParamIsExits')
     .middleware('auth')
 
-  Route.post('login', 'Admin/LoginController.normal')
+  Route.post('login', 'Admin/LoginController.normal').middleware('bodyIsInvalid')
   Route.post('upload', 'Admin/UploadController.avatar')
     .validator('UploadImage')
     .middleware('auth')
@@ -76,8 +76,9 @@ Route.post('ttt', async ({ request }) => {
   try {
     const user = await User.find(5)
     const mercedes = await Car.find(1)
+    return user
     // await user.relaCars().attach(mercedes.id)
-    await user.relaCars().attach([mercedes.id])
+    // await user.relaCars().attach([mercedes.id])
   } catch (error) {
     throw error
   }

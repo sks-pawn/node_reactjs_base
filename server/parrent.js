@@ -56,7 +56,7 @@ Route.get('download/:fileId', async ({ params, response }) => {
 if (auth.user.id === Number(id)) {
     // chính nó thì reset jwt
     let jwt = await auth.withRefreshToken().generate(auth.user)
-    return SucessResponse(response, { jwt, update });
+    return sucessResponseFn(response, { jwt, update });
 }
 
 

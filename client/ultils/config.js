@@ -18,10 +18,11 @@ const config = process.env.NODE_ENV === 'development' ? {
 
 const URL = `${config.protocol}://${config.host}:${config.port}`
 
-export default (endPoint, payload = {}, method = 'get', headers = {}, fomats = 'json') => {
+export default (endPoint, payload = {}, method = 'get', fomats = 'json', headers = {}) => {
     let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU3NDA2OTI1MSwiZXhwIjoxNTc0MDc2NDUxfQ.TWxlinbjI2yNoJQCqW_bFXyZJATCrhiNQY9H5O-nYwk';
     let clientId = 'ClientId';
-    fomats = endPoint ? '.' + fomats : '/.' + fomats;
+    if (!fomats) fomats = ""
+    else fomats = endPoint ? '.' + fomats : '/.' + fomats;
     return axios({
         method: method.toLowerCase(),
         data: payload,

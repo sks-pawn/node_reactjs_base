@@ -15,7 +15,7 @@ class UploadController {
                 overwrite: true
             })
             if (!profilePic.moved()) {
-                return response.BadUploadException(profilePic.error())
+                return response.badUploadExceptionFn(profilePic.error())
             }
             return 'File moved'
         } catch (error) {
