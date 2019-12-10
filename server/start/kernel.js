@@ -16,7 +16,7 @@ const globalMiddleware = [
   'Adonis/Middleware/BodyParser',
   // 'Adonis/Middleware/Shield',
   'Adonis/Middleware/Session',
-  'App/Middleware/ConvertEmptyStringsToNull',
+  'App/Middleware/Http/ConvertEmptyStringsToNull',
   'Adonis/Middleware/AuthInit'
 ]
 
@@ -42,7 +42,7 @@ let namedMiddleware = {
   guest: 'Adonis/Middleware/AllowGuestOnly'
 }
 
-let folder = 'App/Middleware'
+let folder = 'App/Middleware/Http'
 fs.readdirSync(folder).forEach(file => {
   let name = file.slice(0, -3);
   let key = file.charAt(0).toLowerCase() + file.slice(1, -3);

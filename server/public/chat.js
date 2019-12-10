@@ -8,6 +8,7 @@ $(function () {
 })
 
 function startChat() {
+    // client makes a WebSocket connection
     ws = adonis.Ws().connect()
 
     ws.on('open', () => {
@@ -20,13 +21,15 @@ function startChat() {
     })
 }
 
+// they are required to subscribe to a topic in order to exchange messages.
 function subscribeToChannel() {
-    const chat = ws.subscribe('chat:alo')
+    const chat = ws.subscribe('chat:alb')
     chat.on('error', () => {
         $('.connection-status').removeClass('connected')
     })
 
     chat.on('message', message => {
+        console.log('message :', message);
         $('.messages').append(`
         <div class="message"><h3> ${message.username} </h3> <p> ${message.body} </p> </div>
       `)
@@ -40,10 +43,11 @@ $('#message').keyup(function (e) {
         const message = $(this).val()
         $(this).val('')
 
-        ws.getSubscription('chat:alo').emit('message', {
+        ws.getSubscription('chat:alb').emit('message', {
             username: window.username,
             body: message
         })
         return
     }
 })
+
