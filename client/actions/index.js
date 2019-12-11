@@ -1,3 +1,4 @@
 import testA from './testA'
 import testB from './testB'
-export default { ...testA, ...testB } 
+import chat from './chat'
+module.exports = { ...testA, ...testB, ...chat } 

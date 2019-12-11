@@ -11,8 +11,12 @@ const LoggerCustom = {
             addressIp: request.addressIp
         })
     },
-    LoggerPermanentValidator() {
-
+    LoggerPermanentWs(error, data = null) {
+        Logger.error(error.message)
+        Logger.transport('exceptionWs').error(error.message, {
+            timestamp: new Date().toLocaleString(),
+            data: data
+        })
     },
     LoggerPermanentBasic(error) {
         Logger.error(error.message)

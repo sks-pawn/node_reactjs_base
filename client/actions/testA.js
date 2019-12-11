@@ -1,7 +1,7 @@
 import * as TYPES from '~/constants/ActionType'
 import callApi from '~/ultils/apiCaller'
 
-module.exports = {
+export default {
     functionTestA: () => {
         // return (dispatch) => {
         //     return callApi('/products', 'GET', null).then(result => {

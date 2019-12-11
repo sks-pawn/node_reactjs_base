@@ -231,6 +231,14 @@ module.exports = {
       level: 'info',
       timestamp: new Date().toLocaleString(),
       type: 'file'
+    },
+    exceptionWs: {
+      driver: 'file',
+      name: 'adonis-exception-ws',
+      filename: 'exception-ws.log',
+      level: 'info',
+      timestamp: new Date().toLocaleString(),
+      type: 'file'
     }
   },
 

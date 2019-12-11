@@ -78,5 +78,15 @@
         "color": "",
         "background": "",
         "active": true
+    },
+    {
+        "key": "room",
+        "title": "Chat",
+        "href": "/blog/room",
+        "icon": "wechat",
+        "avatar": "",
+        "color": "",
+        "background": "",
+        "active": true
     }
 ]

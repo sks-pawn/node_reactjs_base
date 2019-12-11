@@ -14,9 +14,7 @@ class SocialAuthenticationForRequest {
         let arr = [".json", ".html"]
         let url = request.url()
         request.socialAuthen = url.slice(url.lastIndexOf("/") + 1)
-        arr.forEach(e => {
-            request.socialAuthen = request.socialAuthen.replace(e, "")
-        })
+        arr.forEach(e => request.socialAuthen = request.socialAuthen.replace(e, ""))
 
         await next()
     }

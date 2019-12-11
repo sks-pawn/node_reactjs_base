@@ -19,7 +19,7 @@ const Env = use('Env')
 const socialAuthen = Env.get('SOCIAL_AUTHENTICATION')
 
 Route.group(() => {
-  Route.resource('users', 'Admin/UserController')
+  Route.resource('users', 'UserController')
     .apiOnly()
     .validator(new Map([
       [['store'], ['UserStoreUpdate']],
@@ -32,14 +32,14 @@ Route.group(() => {
       [['index', 'show', 'update', 'destroy'], ['auth']],
       [['store', 'update'], ['bodyIsInvalid']]
     ]))
-  Route.delete('users', 'Admin/UserController.destroy').middleware(['auth:bodyIsInvalid'])
-  Route.delete('destroy-forever', 'Admin/UserController.destroyForever').middleware(['auth:bodyIsInvalid'])
-  Route.delete('destroy-forever/:id', 'Admin/UserController.destroyForever')
+  Route.delete('users', 'UserController.destroy').middleware(['auth:bodyIsInvalid'])
+  Route.delete('destroy-forever', 'UserController.destroyForever').middleware(['auth:bodyIsInvalid'])
+  Route.delete('destroy-forever/:id', 'UserController.destroyForever')
     .validator('ParamIsExits')
     .middleware('auth')
 
-  Route.post('login', 'Admin/LoginController.normal').middleware('bodyIsInvalid')
-  Route.post('upload', 'Admin/UploadController.avatar')
+  Route.post('login', 'LoginController.normal').middleware('bodyIsInvalid')
+  Route.post('upload', 'UploadController.avatar')
     .validator('UploadImage')
     .middleware('auth')
 
@@ -50,13 +50,18 @@ Route.group(() => {
 if (socialAuthen) {
   let listSocial = socialAuthen.split(",")
   Route.group(() => {
-    return listSocial.map(element => Route.get(element, 'Admin/LoginController.redirect'));
+    return listSocial.map(element => Route.get(element, 'LoginController.redirect'));
   }).prefix('login/')
     .middleware('socialAuthenticationForRequest')
   Route.group(() => {
-    return listSocial.map(element => Route.get(element, 'Admin/LoginController.callback'));
+    return listSocial.map(element => Route.get(element, 'LoginController.callback'));
   }).prefix('authenticated/')
     .middleware('socialAuthenticationForRequest')
 }
 
 Route.on('/').render('chat')
+const Ws = use('Ws')
+Route.get('/test', () => {
+  Ws.getChannel('subscriptions')
+  const { broadcast } = Ws.getChannel('chat:*').topic('chat:alb')
+})

@@ -2,6 +2,20 @@
 # yarn lockfile v1
 
 
+"@adonisjs/websocket-client@^1.0.9":
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/@adonisjs/websocket-client/-/websocket-client-1.0.9.tgz#94f018489e68e05425046b053478d44ed003b827"
+  integrity sha512-GhHmGgyylwYUB+lBMt6KFPEQo1tck4Pn1n/aFs23CydcdChJfy4Yhtn+edqTtIYS+HTpbvXNvqn2z4EiS/xZOg==
+  dependencies:
+    "@adonisjs/websocket-packet" "^1.0.6"
+    emittery "^0.3.0"
+    query-string "^6.0.0"
+
+"@adonisjs/websocket-packet@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@adonisjs/websocket-packet/-/websocket-packet-1.0.6.tgz#7b310c777fd66793149ff2de94c6b2be46302bdc"
+  integrity sha512-4MlcnwfJ5fy9EGBA0gNDAUThfrK4JeisQzHkRg0Z/Y3WGeciSuzgRB8hdwi2YEFeNOsEFcKme4ubEZXTAF020g==
+
 "@ant-design/colors@^3.1.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@ant-design/colors/-/colors-3.1.0.tgz#b7e2cc61a4e86d3d109494034acfb1222dacaa3c"
@@ -2204,6 +2218,11 @@ elliptic@^6.0.0:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.0"
 
+emittery@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/emittery/-/emittery-0.3.0.tgz#e6dcedabae804b5478c760335ecbbaf159da645c"
+  integrity sha512-Bn/IFhx+BQIjTKn0vq7YWwo/yfTNeBZMqOGufY5FEV07tbwy5heDROFDCkMO2PcO5s7B9FDDXZc+JGgl6KzBOQ==
+
 emojis-list@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/emojis-list/-/emojis-list-2.1.0.tgz#4daa4d9db00f9819880c79fa457ae5b09a1fd389"
@@ -4248,6 +4267,15 @@ punycode@^2.1.0:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
 
+query-string@^6.0.0:
+  version "6.9.0"
+  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.9.0.tgz#1c3b727c370cf00f177c99f328fda2108f8fa3dd"
+  integrity sha512-KG4bhCFYapExLsUHrFt+kQVEegF2agm4cpF/VNc6pZVthIfCc/GK8t8VyNIE3nyXG9DK3Tf2EGkxjR6/uRdYsA==
+  dependencies:
+    decode-uri-component "^0.2.0"
+    split-on-first "^1.0.0"
+    strict-uri-encode "^2.0.0"
+
 querystring-es3@^0.2.0:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/querystring-es3/-/querystring-es3-0.2.1.tgz#9ec61f79049875707d69414596fd907a4d711e73"
@@ -5276,6 +5304,11 @@ spdx-license-ids@^3.0.0:
   resolved "https://registry.yarnpkg.com/spdx-license-ids/-/spdx-license-ids-3.0.5.tgz#3694b5804567a458d3c8045842a6358632f62654"
   integrity sha512-J+FWzZoynJEXGphVIS+XEh3kFSjZX/1i9gFBaWQcB+/tmpe2qUsSBABpcxqxnAxFdiUFEgAX1bjYGQvIZmoz9Q==
 
+split-on-first@^1.0.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/split-on-first/-/split-on-first-1.1.0.tgz#f610afeee3b12bce1d0c30425e76398b78249a5f"
+  integrity sha512-43ZssAJaMusuKWL8sKUBQXHWOpq8d6CfN/u1p4gUzfJkM05C8rxTmYrkIPTXapZpORA6LkkzcUulJ8FqA7Uudw==
+
 split-string@^3.0.1, split-string@^3.0.2:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/split-string/-/split-string-3.1.0.tgz#7cb09dda3a86585705c64b39a6466038682e8fe2"
@@ -5344,6 +5377,11 @@ stream-shift@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/stream-shift/-/stream-shift-1.0.0.tgz#d5c752825e5367e786f78e18e445ea223a155952"
   integrity sha1-1cdSgl5TZ+eG944Y5EXqIjoVWVI=
+
+strict-uri-encode@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/strict-uri-encode/-/strict-uri-encode-2.0.0.tgz#b9c7330c7042862f6b142dc274bbcc5866ce3546"
+  integrity sha1-ucczDHBChi9rFC3CdLvMWGbONUY=
 
 string-convert@^0.2.0:
   version "0.2.1"

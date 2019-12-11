@@ -21,10 +21,12 @@ const nextConfig = {
     env: {
         'APP_KEY': 'C0J3ySOOUcWG19NdhHEtUMfBcMMNpYHN',
         'SERVER_DEV_PROTOCOL': 'http',
+        'SERVER_DEV_PROTOCOL_WS': 'ws',
         'SERVER_DEV_HOST': 'localhost',
         'SERVER_DEV_PORT': '3333',
-        'SERVER_PRODUCT_PROTOCOL': 'http',
-        'SERVER_PRODUCT_HOST': 'localhost',
+        'SERVER_PRODUCT_PROTOCOL': 'https',
+        'SERVER_PRODUCT_PROTOCOL_WS': 'wss',
+        'SERVER_PRODUCT_HOST': '381829',
         'SERVER_PRODUCT_PORT': '8080'
     }
 };
