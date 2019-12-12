@@ -26,8 +26,11 @@ export default (endPoint, payload = {}, method = 'get', fomats = 'json', headers
             ...baseHeaders,
             ...headers,
         }, item => !_.isEmpty(item))
-    }).catch((e) => {
-        if (e.response) throw e.response;
-        throw e;
     })
+        .then(res => {
+            return res.data.success.data
+        }).catch((e) => {
+            if (e.response) throw e.response;
+            throw e;
+        })
 };

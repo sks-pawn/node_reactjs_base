@@ -1,10 +1,7 @@
 import * as TYPES from '~/constants/ActionType'
 import callApi from '~/ultils/apiCaller'
 
-export default {
-    API_HEALTHCHECK: () => {
-        return callApi.get('/');
-    },
+module.exports = {
     ROOM_CREATE: async () => {
         return callApi.post('/rooms');
     },

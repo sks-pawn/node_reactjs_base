@@ -1,4 +1,5 @@
 import Document, { Head, Main, NextScript, Html } from 'next/document'
+import { API_HEALTHCHECK } from '~/actions';
 
 class MyDocument extends Document {
     static async getInitialProps(ctx) {
@@ -11,7 +12,7 @@ class MyDocument extends Document {
         //         // useful for wrapping in a per-page basis
         //         enhanceComponent: Component => Component,
         //     })
-
+        API_HEALTHCHECK();
         const initialProps = await Document.getInitialProps(ctx)
         return { ...initialProps }
     }

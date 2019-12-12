@@ -18,6 +18,20 @@ const Route = use('Route')
 const Env = use('Env')
 const socialAuthen = Env.get('SOCIAL_AUTHENTICATION')
 
+Route.get('/', () => 'Hello world')
+
+if (socialAuthen) {
+  let listSocial = socialAuthen.split(",")
+  Route.group(() => {
+    return listSocial.map(element => Route.get(element, 'LoginController.redirect'));
+  }).prefix('login/')
+    .middleware('socialAuthenticationForRequest')
+  Route.group(() => {
+    return listSocial.map(element => Route.get(element, 'LoginController.callback'));
+  }).prefix('authenticated/')
+    .middleware('socialAuthenticationForRequest')
+}
+
 Route.group(() => {
   Route.resource('users', 'UserController')
     .apiOnly()
@@ -47,19 +61,18 @@ Route.group(() => {
   .middleware(['countryDetector:convertEmptyStringsToNull'])
   .formats(['json'], true)
 
-if (socialAuthen) {
-  let listSocial = socialAuthen.split(",")
-  Route.group(() => {
-    return listSocial.map(element => Route.get(element, 'LoginController.redirect'));
-  }).prefix('login/')
-    .middleware('socialAuthenticationForRequest')
-  Route.group(() => {
-    return listSocial.map(element => Route.get(element, 'LoginController.callback'));
-  }).prefix('authenticated/')
-    .middleware('socialAuthenticationForRequest')
-}
 
-Route.on('/').render('chat')
+Route.group(() => {
+  Route.get(':id', 'RoomController.select')
+  Route.post('', 'RoomController.create')
+  Route.post(':id', 'RoomController.createMessage')
+}).prefix('/rooms')
+  .formats(['json'], true)
+
+
+
+
+// Route.on('/').render('chat')
 const Ws = use('Ws')
 Route.get('/test', () => {
   Ws.getChannel('subscriptions')

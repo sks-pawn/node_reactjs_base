@@ -3,18 +3,17 @@ import Head from 'next/head'
 import MyLayout from '~/components/blog/layout/index'
 import Button from '~/components/blog/chat/form/Button';
 import { ROOM_CREATE } from '~/actions';
+import Router from 'next/router'
 
-
-
-const MyPage = ({ history }) => {
+const MyPage = () => {
     const [loading, setLoading] = useState(false);
 
     const handleRoomCreate = async () => {
         setLoading(true);
-        const room = await ROOM_CREATE();
-        const { uuid } = room;
+        let room = await ROOM_CREATE();
+        let { uuid } = room;
         setLoading(false);
-        history.push(`/room/${uuid}`);
+        Router.push(`/blog/room/${uuid}`);
     };
 
     return (
