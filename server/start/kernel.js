@@ -2,6 +2,7 @@
 
 /** @type {import('@adonisjs/framework/src/Server')} */
 const Server = use('Server')
+const Helpers = use('Helpers')
 const fs = require('fs');
 /*
 |--------------------------------------------------------------------------
@@ -42,13 +43,12 @@ let namedMiddleware = {
   guest: 'Adonis/Middleware/AllowGuestOnly'
 }
 
-let folder = 'App/Middleware'
-fs.readdirSync(folder).forEach(file => {
+fs.readdirSync(Helpers.appRoot() + '/app/Middleware').forEach(file => {
   let name = file.slice(0, -3);
   let key = file.charAt(0).toLowerCase() + file.slice(1, -3);
   namedMiddleware = {
     ...namedMiddleware, ...{
-      [key]: folder + "/" + name
+      [key]: 'App/Middleware' + "/" + name
     }
   }
 });

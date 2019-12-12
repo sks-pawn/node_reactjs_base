@@ -4,8 +4,11 @@
 const Schema = use('Schema')
 
 class MessageSchema extends Schema {
-  up() {
-    this.create('messages', (table) => {
+  async up() {
+    const exists = await this.hasTable('messages')
+
+    if (!exists)  {
+      this.create('messages', (table) => {
       table.increments()
       table.timestamps()
 
@@ -13,7 +16,8 @@ class MessageSchema extends Schema {
 
       table.string('name').notNullable()
       table.text('message').notNullable()
-    })
+      })
+    }
   }
 
   down() {

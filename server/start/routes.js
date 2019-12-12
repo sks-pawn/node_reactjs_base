@@ -18,7 +18,7 @@ const Route = use('Route')
 const Env = use('Env')
 const socialAuthen = Env.get('SOCIAL_AUTHENTICATION')
 
-Route.get('/', () => 'Hello world')
+Route.get('/', () => 'Hello world').middleware(['countryDetector:convertEmptyStringsToNull'])
 
 if (socialAuthen) {
   let listSocial = socialAuthen.split(",")
@@ -67,6 +67,7 @@ Route.group(() => {
   Route.post('', 'RoomController.create')
   Route.post(':id', 'RoomController.createMessage')
 }).prefix('/rooms')
+  .middleware(['countryDetector:convertEmptyStringsToNull'])
   .formats(['json'], true)
 
 

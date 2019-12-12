@@ -4,13 +4,17 @@
 const Schema = use('Schema')
 
 class RoomSchema extends Schema {
-  up () {
-    this.create('rooms', (table) => {
+  async up () {
+    const exists = await this.hasTable('rooms')
+
+    if (!exists)  {
+      this.create('rooms', (table) => {
       table.increments()
       table.timestamps()
 
       table.uuid('uuid').unique()
-    })
+      })
+    }
   }
 
   down () {
