@@ -21,7 +21,7 @@
 // export default Post
 
 import React, { Component } from 'react';
-import Ws from '@adonisjs/websocket-client'
+import SocketConnection from '~/lib/socket'
 import { ROOM_FETCH } from '~/actions';
 
 
@@ -39,20 +39,20 @@ class MyPage extends Component {
         };
     }
 
-    // componentDidMount() {
-    //     connection.connect();
+    componentDidMount() {
+        SocketConnection.connect();
 
-    //     // storing the subscription in the global variable
-    //     // passing the incoming data handler fn as a second argument
-    //     subscription = connection.subscribe(`room:${this.props.id}`, this.handleMessageAdd);
+        // storing the subscription in the global variable
+        // passing the incoming data handler fn as a second argument
+        // subscription = SocketConnection.subscribe(`room:${this.props.id}`, this.handleMessageAdd);
 
-    //     // loading existing messages
-    //     this.fetchMessages();
-    // }
+        // loading existing messages
+        // this.fetchMessages();
+    }
 
-    // componentWillUnmount() {
-    //     subscription.close();
-    // }
+    componentWillUnmount() {
+        // subscription.close();
+    }
 
     handleMessageAdd = message => {
         const { type, data } = message;

@@ -1,4 +1,4 @@
-import Ws from '@adonisjs/websocket-client'
+import Ws from 'adonis-websocket-client'
 import { URL_WS } from '~/constants/Config'
 
 export class SocketConnection {
