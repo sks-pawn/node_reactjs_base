@@ -21,8 +21,13 @@
 // export default Post
 
 import React, { Component } from 'react';
-import SocketConnection from '~/lib/socket'
-import { ROOM_FETCH } from '~/actions';
+// import SocketConnection from '~/lib/socket'
+import Ws from 'adonis-websocket-client'
+import { URL_WS } from '~/constants/Config'
+
+
+
+// import { ROOM_FETCH } from '~/actions';
 
 
 import Messages from '~/components/blog/chat/Messages';
@@ -40,7 +45,10 @@ class MyPage extends Component {
     }
 
     componentDidMount() {
-        SocketConnection.connect();
+        let a = Ws(URL_WS, {
+        }).channel('room:*').connect()
+        console.log('a :', a);
+        // SocketConnection.connect();
 
         // storing the subscription in the global variable
         // passing the incoming data handler fn as a second argument

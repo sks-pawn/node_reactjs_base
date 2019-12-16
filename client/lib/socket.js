@@ -6,7 +6,7 @@ export class SocketConnection {
         this.ws = Ws(URL_WS)
             // .withApiToken(token)
             .connect();
-
+        console.log('this.ws', this.ws);
         this.ws.on('open', () => {
             console.log('Connection initialized')
         });
