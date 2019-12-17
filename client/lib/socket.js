@@ -1,12 +1,12 @@
-import Ws from 'adonis-websocket-client'
 import { URL_WS } from '~/constants/Config'
 
 export class SocketConnection {
     connect() {
+        const Ws = require('@adonisjs/websocket-client');
         this.ws = Ws(URL_WS)
             // .withApiToken(token)
             .connect();
-        console.log('this.ws', this.ws);
+            
         this.ws.on('open', () => {
             console.log('Connection initialized')
         });

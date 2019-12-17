@@ -74,7 +74,6 @@ Route.group(() => {
 
 
 
-// Route.on('/').render('chat')
 const Ws = use('Ws')
 Route.get('/test', () => {
   Ws.getChannel('subscriptions')

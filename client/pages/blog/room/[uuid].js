@@ -1,4 +1,4 @@
-// import { useRouter } from 'next/router'
+
 // import Link from 'next/link'
 
 // const Post = () => {
@@ -21,20 +21,16 @@
 // export default Post
 
 import React, { Component } from 'react';
-// import SocketConnection from '~/lib/socket'
-import Ws from 'adonis-websocket-client'
-import { URL_WS } from '~/constants/Config'
-
-
-
+import { useRouter } from 'next/router'
+import SocketConnection from '~/lib/socket'
 // import { ROOM_FETCH } from '~/actions';
-
-
 import Messages from '~/components/blog/chat/Messages';
 import AddMessage from '~/components/blog/chat/AddMessage';
 
 // a global variable so we can disconnect once we unmount
 let subscription;
+const router = useRouter()
+const { uuid } = router.query
 
 class MyPage extends Component {
     constructor(props) {
@@ -45,22 +41,20 @@ class MyPage extends Component {
     }
 
     componentDidMount() {
-        let a = Ws(URL_WS, {
-        }).channel('room:*').connect()
-        console.log('a :', a);
-        // SocketConnection.connect();
-
+        SocketConnection.connect();
+        console.log('uuid', uuid)
         // storing the subscription in the global variable
         // passing the incoming data handler fn as a second argument
+        console.log(this.props);
         // subscription = SocketConnection.subscribe(`room:${this.props.id}`, this.handleMessageAdd);
 
         // loading existing messages
         // this.fetchMessages();
     }
 
-    componentWillUnmount() {
-        // subscription.close();
-    }
+    // componentWillUnmount() {
+    // subscription.close();
+    // }
 
     handleMessageAdd = message => {
         const { type, data } = message;
