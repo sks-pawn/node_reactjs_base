@@ -25,7 +25,7 @@ class RoomController {
             let uuid = uuidv4();
             room.uuid = uuid;
             await room.save();
-            let result = await Room.findBy('uuid', uuid)
+            let result = await Room.find(uuid)
             return response.sucessResponseFn(result.toJSON());
         } catch (error) {
             LoggerPermanentException(error, request, request.post())
@@ -34,19 +34,22 @@ class RoomController {
     }
 
     async createMessage({ params, request, response }) {
-        const room = await Room.find(params.id);
-        if (!room) {
-            return response.notFound(`The room doesn't exist`)
+        try {
+            const room = await Room.find(params.id)
+            if (!room) {
+                return response.notFoundFn(`The room doesn't exist`)
+            }
+
+            const data = request.only(['name', 'message']);
+            const message = await room.relaMessages().create(data);
+            // send the message upon new message creation
+            // define a type for the frontend app - "room:newMessage"
+            broadcast(room.uuid, 'room:newMessage', message.toJSON());
+            return response.sucessResponseFn(message.toJSON());
+        } catch (error) {
+            LoggerPermanentException(error, request, request.post())
+            return response.badResponseExceptionFn(request.post(), error.message);
         }
-
-        const data = request.only(['name', 'message']);
-        const message = await room.messages().create(data);
-
-        // send the message upon new message creation
-        // define a type for the frontend app - "room:newMessage"
-        broadcast(room.uuid, 'room:newMessage', message);
-
-        return message
     }
 }
 

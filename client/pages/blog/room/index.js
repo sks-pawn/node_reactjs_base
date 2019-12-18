@@ -13,6 +13,7 @@ const MyPage = () => {
         let room = await ROOM_CREATE();
         let { uuid } = room;
         setLoading(false);
+        if (!uuid) return;
         Router.push(`/blog/room/${uuid}`);
     };
 

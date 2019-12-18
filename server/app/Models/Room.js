@@ -4,6 +4,17 @@
 const Model = use('Model')
 
 class Room extends Model {
+    static get hidden() {
+        return ['id']
+    }
+
+    static get primaryKey() {
+        return 'uuid'
+    }
+
+    relaMessages() {
+        return this.hasMany('App/Models/Message')
+    }
 }
 
 module.exports = Room

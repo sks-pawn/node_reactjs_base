@@ -5,10 +5,10 @@ module.exports = {
     ROOM_CREATE: async () => {
         return callApi.post('/rooms');
     },
-    ROOM_FETCH: async id => {
-        return callApi.get(`/rooms/${id}`);
+    ROOM_FETCH: async uuid => {
+        return callApi.get(`/rooms/${uuid}`);
     },
-    MESSAGE_POST: async (data, id) => {
-        return callApi.post(`/rooms/${id}`, data);
+    MESSAGE_POST: async (uuid, data) => {
+        return callApi.post(`/rooms/${uuid}`, data);
     }
 }

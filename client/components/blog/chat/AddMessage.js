@@ -26,7 +26,7 @@ const AddMessage = ({ roomId }) => {
 
     // we post the new message but don't wait for a response
     // receiving a new message is managed by socket connection
-    MESSAGE_POST(formData, roomId);
+    MESSAGE_POST(roomId, formData);
 
     setFormData({
       ...formData,

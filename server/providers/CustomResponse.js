@@ -8,7 +8,7 @@ class CustomResponseProvider extends ServiceProvider {
         // Adonis/Src/HttpContext
         // Adonis/Src/Route
 
-        Response.macro('badValidatorExceptionFn', function (data = null, message = "Error-Validator", status = 400) {
+        Response.macro('badValidatorExceptionFn', function (data = null, message = "Error Validator", status = 400) {
             if (!message) message = "Error-Validator"
             if (!status) status = 400
             this.status(status).json({
@@ -22,7 +22,7 @@ class CustomResponseProvider extends ServiceProvider {
             })
         })
 
-        Response.macro('badUploadExceptionFn', function (data = null, message = "Error-Upload", status = 400) {
+        Response.macro('badUploadExceptionFn', function (data = null, message = "Error Upload", status = 400) {
             if (!message) message = "Error-Upload"
             if (!status) status = 400
             this.status(status).json({
@@ -58,6 +58,16 @@ class CustomResponseProvider extends ServiceProvider {
                     message,
                     status,
                     data
+                }
+            })
+        })
+
+        Response.macro('notFoundFn', function (message = "Not Found", status = 404) {
+            this.status(status).json({
+                error: {
+                    name: "Error Not Found",
+                    message,
+                    status
                 }
             })
         })

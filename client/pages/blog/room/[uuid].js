@@ -1,52 +1,34 @@
 
-// import Link from 'next/link'
 
-// const Post = () => {
-//     const router = useRouter()
-//     const { uuid } = router.query
-//     return <div>
-//         <p>Post: {uuid}</p>
-//         <Link href="/blog/room/[uuid]" as="/blog/room/abc">
-//             <a>First Post</a>
-//         </Link>
-//         <div>
-//             Click <span>here</span> to read more
-//     </div>
 //         <Link href="/" prefetch={false}>
 //             <a>About</a>
 //         </Link>
-//     </div>
-// }
-
-// export default Post
 
 import React, { Component } from 'react';
-import { useRouter } from 'next/router'
+import { withRouter } from 'next/router'
 import SocketConnection from '~/lib/socket'
 // import { ROOM_FETCH } from '~/actions';
 import Messages from '~/components/blog/chat/Messages';
 import AddMessage from '~/components/blog/chat/AddMessage';
 
 // a global variable so we can disconnect once we unmount
-let subscription;
-const router = useRouter()
-const { uuid } = router.query
 
 class MyPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            uuid: props.router.query.uuid,
             messages: []
         };
     }
 
     componentDidMount() {
         SocketConnection.connect();
-        console.log('uuid', uuid)
+
         // storing the subscription in the global variable
         // passing the incoming data handler fn as a second argument
-        console.log(this.props);
-        // subscription = SocketConnection.subscribe(`room:${this.props.id}`, this.handleMessageAdd);
+
+        this.subscription = SocketConnection.subscribe(`room:${this.state.uuid}`);
 
         // loading existing messages
         // this.fetchMessages();
@@ -58,21 +40,21 @@ class MyPage extends Component {
 
     handleMessageAdd = message => {
         const { type, data } = message;
-
+        console.log('message', this.state);
         // you could handle various types here, like deleting or editing a message
-        switch (type) {
-            case 'room:newMessage':
-                this.setState(prevState => ({
-                    messages: [...prevState.messages, data]
-                }));
-                break;
-            default:
-        }
+        // switch (type) {
+        //     case 'room:newMessage':
+        //         this.setState(prevState => ({
+        //             messages: [...prevState.messages, data]
+        //         }));
+        //         break;
+        //     default:
+        // }
     };
 
     fetchMessages = async () => {
         try {
-            const room = await ROOM_FETCH(this.props.id);
+            const room = await ROOM_FETCH(this.state.uuid);
             this.setState({ messages: room.messages });
         } catch (_) {
             this.props.history.push('/');
@@ -80,16 +62,15 @@ class MyPage extends Component {
     };
 
     render() {
-        const { messages } = this.state;
-        const { id } = this.props;
+        const { messages, uuid } = this.state;
 
         return (
             <div className="mx-auto p-3 flex flex-col h-screen justify-between" style={{ maxWidth: '800px' }}>
                 <Messages data={messages} />
-                <AddMessage roomId={id} />
+                <AddMessage roomId={uuid} />
             </div>
         )
     }
 }
 
-export default MyPage;
+export default withRouter(MyPage)
