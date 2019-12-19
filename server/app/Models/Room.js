@@ -12,9 +12,14 @@ class Room extends Model {
         return 'uuid'
     }
 
+    relaUsers() {
+        return this.belongsToMany('App/Models/User')
+            .pivotTable('users_rooms')
+    }
     relaMessages() {
         return this.hasMany('App/Models/Message')
     }
+
 }
 
 module.exports = Room

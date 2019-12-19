@@ -70,12 +70,3 @@ Route.group(() => {
 }).prefix('/rooms')
   .middleware(['countryDetector:convertEmptyStringsToNull'])
   .formats(['json'], true)
-
-
-
-
-const Ws = use('Ws')
-Route.get('/test', () => {
-  Ws.getChannel('subscriptions')
-  const { broadcast } = Ws.getChannel('chat:*').topic('chat:alb')
-})

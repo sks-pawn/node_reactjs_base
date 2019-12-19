@@ -28,7 +28,15 @@ export default (endPoint, payload = {}, method = 'get', fomats = 'json', headers
         }, item => !_.isEmpty(item))
     })
         .then(res => {
-            return res.data.success.data;
+            if (res.data) {
+                let { success } = res.data
+                if (success) {
+                    let { data } = success
+                    if (data) return data
+                    return success
+                }
+            }
+            return res.data
         }).catch((e) => {
             if (e.response) throw e.response;
             throw e;

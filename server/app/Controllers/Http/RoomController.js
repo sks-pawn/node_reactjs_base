@@ -7,16 +7,21 @@ const Status = use('App/Constants/Status')
 const { LoggerPermanentException } = use('App/Helpers/Loggers')
 
 class RoomController {
-    async select({ params, response }) {
-        const room = await Room
-            .query()
-            .where('uuid', params.id)
-            .with('messages')
-            .first();
-        if (!room) {
-            return response.notFound(`The room doesn't exist`)
+    async select({ params, request, response }) {
+        try {
+            const room = await Room
+                .query()
+                .where('uuid', params.id)
+                .with('relaMessages')
+                .first();
+            if (!room) {
+                return response.notFoundFn(`The room doesn't exist`)
+            }
+            return response.sucessResponseFn(room.toJSON());
+        } catch (error) {
+            LoggerPermanentException(error, request, request.post())
+            return response.badResponseExceptionFn(request.post(), error.message);
         }
-        return room;
     }
 
     async create({ request, response }) {

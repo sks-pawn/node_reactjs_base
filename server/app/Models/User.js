@@ -83,6 +83,10 @@ class User extends Model {
       .pivotTable('users_cars')
       .withPivot(['status'])
   }
+  relaRooms() {
+    return this.belongsToMany('App/Models/Room')
+      .pivotTable('users_rooms')
+  }
   relaPosts() {
     return this.hasMany('App/Models/Post')
   }

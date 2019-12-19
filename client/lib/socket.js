@@ -6,7 +6,7 @@ export class SocketConnection {
         this.ws = Ws(URL_WS)
             // .withApiToken(token)
             .connect();
-            
+
         this.ws.on('open', () => {
             console.log('Connection initialized')
         });
@@ -15,8 +15,8 @@ export class SocketConnection {
             console.log('Connection closed')
         });
 
-        this.ws.on('error', () => {
-            console.log('Connection error')
+        this.ws.on('error', (error) => {
+            console.error(error)
         })
 
         return this
@@ -24,12 +24,11 @@ export class SocketConnection {
 
     subscribe(channel, handler) {
         if (!this.ws) {
-            setTimeout(() => this.subscribe(channel), 1000)
+            setTimeout(() => this.subscribe(channel, handler), 1000)
         } else {
             const result = this.ws.subscribe(channel);
 
             result.on('message', message => {
-                console.log('Incoming', message);
                 handler(message)
             });
 
