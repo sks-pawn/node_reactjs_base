@@ -1,46 +1,77 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
+import Router from 'next/router'
 import Head from 'next/head'
 import MyLayout from '~/components/blog/layout/index'
-import Button from '~/components/blog/chat/form/Button';
 import { ROOM_CREATE } from '~/actions';
-import Router from 'next/router'
+import { Row, Col, Input, Button, Icon } from 'antd';
 
-const MyPage = () => {
-    const [loading, setLoading] = useState(false);
+class MyPage extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            loading: false,
+            name: ""
+        }
+    }
 
-    const handleRoomCreate = async () => {
-        setLoading(true);
-        let room = await ROOM_CREATE();
+    componentDidMount() {
+        this.fetchRooms();
+    }
+
+    fetchRooms = async () => {
+        
+    }
+
+    handleRoomCreate = async () => {
+        if (!this.state.name) return
+        localStorage.setItem("name", this.state.name);
+        this.setState({ loading: true })
+        let room = await ROOM_CREATE()
         let { uuid } = room;
-        setLoading(false);
+        this.setState({ loading: false })
         if (!uuid) return;
-        Router.push(`/blog/room/${uuid}`);
-    };
+        Router.push(`/blog/room/${uuid}`)
+    }
 
-    return (
-        <MyLayout>
-            <Head>
-                <title>Room chat</title>
-            </Head>
-            <div className='hero'>
-                <h1 className='title'>Room chat!</h1>
-                <div className="flex h-screen flex-col justify-center">
-                    <div className="container mx-auto p-3">
-                        <h1>AdonisJS sockets demo</h1>
-                        <p className="mt-3 mb-5 text-muted">
-                            Create a chatroom, open it in various tabs, send messages and watch the sockets flow. (Check the console!)
-                         </p>
-                        <Button onClick={handleRoomCreate} disabled={loading}>
-                            Create a new room
-                        </Button>
+    onChange = ({ target }) => {
+        const { name, value } = target;
+        this.setState({
+            [name]: value
+        })
+    }
+
+    render() {
+        return (
+            <MyLayout>
+                <Head>
+                    <title>Room chat</title>
+                </Head>
+                <div className='hero'>
+                    <h1 className='title'>AdonisJS sockets demo - Room chat!</h1>
+                    <div>
+                        <Row gutter={[8, 8]}>
+                            <Col span={12}>
+                                <Input placeholder="Name"
+                                    prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                    allowClear
+                                    name="name"
+                                    value={this.state.name}
+                                    onChange={this.onChange} />
+                            </Col>
+                            <Col span={12}>
+                                <Button onClick={this.handleRoomCreate} loading={this.state.loading}>
+                                    Create a new room
+                                </Button>
+                            </Col>
+                        </Row>
+                    </div>
+                    <div>
                     </div>
                 </div>
-            </div>
-        </MyLayout>
-    )
+            </MyLayout>
+        )
+    }
 }
+
+
 export default MyPage
-
-
-
-
