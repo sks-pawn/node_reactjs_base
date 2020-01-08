@@ -2,15 +2,17 @@ import React, { Component } from 'react';
 import Router from 'next/router'
 import Head from 'next/head'
 import MyLayout from '~/components/blog/layout/index'
-import { ROOM_CREATE } from '~/actions';
-import { Row, Col, Input, Button, Icon } from 'antd';
+import RoomsList from '~/components/blog/room/RoomsList'
+import { ROOM_FETCH, ROOM_CREATE } from '~/actions';
+import { Form, Input, Button, Icon, notification } from 'antd';
 
 class MyPage extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            rooms: [],
             loading: false,
-            name: ""
+            username: ""
         }
     }
 
@@ -19,18 +21,33 @@ class MyPage extends Component {
     }
 
     fetchRooms = async () => {
-        
+        try {
+            let rooms = await ROOM_FETCH()
+            this.setState({ rooms })
+        } catch (error) {
+            notification['error']({
+                message: error.name,
+                description: error.message
+            })
+        }
     }
 
     handleRoomCreate = async () => {
-        if (!this.state.name) return
-        localStorage.setItem("name", this.state.name);
+        if (!this.state.username) return
+        localStorage.setItem("username", this.state.username);
         this.setState({ loading: true })
-        let room = await ROOM_CREATE()
-        let { uuid } = room;
-        this.setState({ loading: false })
-        if (!uuid) return;
-        Router.push(`/blog/room/${uuid}`)
+        try {
+            let room = await ROOM_CREATE()
+            let { uuid } = room;
+            this.setState({ loading: false })
+            Router.push(`/blog/room/${uuid}`)
+        } catch (error) {
+            notification['error']({
+                message: error.name,
+                description: error.message
+            })
+            this.setState({ loading: false })
+        }
     }
 
     onChange = ({ target }) => {
@@ -41,6 +58,7 @@ class MyPage extends Component {
     }
 
     render() {
+        let { username, loading, rooms } = this.state
         return (
             <MyLayout>
                 <Head>
@@ -49,26 +67,25 @@ class MyPage extends Component {
                 <div className='hero'>
                     <h1 className='title'>AdonisJS sockets demo - Room chat!</h1>
                     <div>
-                        <Row gutter={[8, 8]}>
-                            <Col span={12}>
-                                <Input placeholder="Name"
+                        <Form layout="inline">
+                            <Form.Item validateStatus={!username ? 'error' : 'success'} help={!username ? 'Please input your username!' : ''}>
+                                <Input placeholder="username"
                                     prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
                                     allowClear
-                                    name="name"
-                                    value={this.state.name}
+                                    name="username"
+                                    value={username}
                                     onChange={this.onChange} />
-                            </Col>
-                            <Col span={12}>
-                                <Button onClick={this.handleRoomCreate} loading={this.state.loading}>
-                                    Create a new room
-                                </Button>
-                            </Col>
-                        </Row>
+                            </Form.Item>
+                            <Button onClick={this.handleRoomCreate} loading={loading} htmlType="submit">
+                                Create a new room
+                            </Button>
+                        </Form>
                     </div>
                     <div>
+                        <RoomsList rooms={rooms} />
                     </div>
                 </div>
-            </MyLayout>
+            </MyLayout >
         )
     }
 }

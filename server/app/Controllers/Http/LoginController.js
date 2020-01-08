@@ -25,7 +25,7 @@ class LoginController {
 
     async callback({ ally, auth, request, response }) {
         try {
-            const fbUser = await ally.driver(request.socialAuthen).getUser()
+            let fbUser = await ally.driver(request.socialAuthen).getUser()
             let userDetails = {
                 login_source: request.socialAuthen,
                 first_name: fbUser.getName(),

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Router, { withRouter } from 'next/router'
 import SocketConnection from '~/lib/socket'
-import { ROOM_FETCH } from '~/actions';
+import { ROOM_SHOW } from '~/actions';
 import Messages from '~/components/blog/chat/Messages';
 import AddMessage from '~/components/blog/chat/AddMessage';
 class MyPage extends Component {
@@ -37,7 +37,7 @@ class MyPage extends Component {
 
     fetchMessages = async () => {
         try {
-            const room = await ROOM_FETCH(this.state.uuid);
+            const room = await ROOM_SHOW(this.state.uuid);
             this.setState({ messages: room.relaMessages });
         } catch (_) {
             Router.push(`/blog/room`);

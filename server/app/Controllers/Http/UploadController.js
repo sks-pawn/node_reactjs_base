@@ -5,7 +5,7 @@ const { Upload } = use('App/Constants/Specialize')
 class UploadController {
     async avatar({ request, response }) {
         try {
-            const profilePic = request.file('image', {
+            let profilePic = request.file('image', {
                 types: ['image'],
                 size: Upload.IMAGE_SIZE_MAX.number
             })

@@ -38,7 +38,7 @@ export default (endPoint, payload = {}, method = 'get', fomats = 'json', headers
             }
             return res.data
         }).catch((e) => {
-            if (e.response) throw e.response;
+            if (e.response) throw e.response.data.error;
             throw e;
         })
 };

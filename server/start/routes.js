@@ -64,8 +64,13 @@ Route.group(() => {
 
 
 Route.group(() => {
-  Route.get(':id', 'RoomController.select')
-  Route.post('', 'RoomController.create')
+  Route.resource('', 'RoomController')
+    .apiOnly()
+    .validator(new Map([
+      [['show'], ['ParamIsExits']],
+      [['update'], ['ParamIsExits']],
+      [['destroy'], ['ParamIsExits']]
+    ]))
   Route.post(':id', 'RoomController.createMessage')
 }).prefix('/rooms')
   .middleware(['countryDetector:convertEmptyStringsToNull'])
