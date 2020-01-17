@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Link from 'next/link'
-import { Menu, Icon, Avatar, Tooltip } from 'antd';
+import { Menu, Avatar, Icon, Tooltip } from 'antd';
 import navJson from '~/resources/json/nav.json'
 import Router from 'next/router'
 

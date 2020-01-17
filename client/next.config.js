@@ -7,15 +7,36 @@ const compose = require('next-compose-plugins')
 
 const cssConfig = {/** css config here */ }
 
+// fix: prevents error when .css files are required by node
 if (typeof require !== 'undefined') {
     require.extensions['.css'] = file => { }
 }
 
 const nextConfig = {
-    webpack: (config) => {
+    webpack: (config, { isServer }) => {
         config.plugins.push(
             new webpack.EnvironmentPlugin(localEnv)
         )
+        if (isServer) {
+            const antStyles = /antd\/.*?\/style\/css.*?/;
+            const origExternals = [...config.externals];
+            config.externals = [ // eslint-disable-line
+                (context, request, callback) => { // eslint-disable-line
+                    if (request.match(antStyles)) return callback();
+                    if (typeof origExternals[0] === 'function') {
+                        origExternals[0](context, request, callback);
+                    } else {
+                        callback();
+                    }
+                },
+                ...(typeof origExternals[0] === 'function' ? [] : origExternals),
+            ];
+
+            config.module.rules.unshift({
+                test: antStyles,
+                use: 'null-loader',
+            });
+        }
         return config
     },
     env: {
