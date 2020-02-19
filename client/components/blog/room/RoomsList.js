@@ -8,28 +8,17 @@ const MyComponent = ({ rooms }) => {
             title: 'Uuid',
             dataIndex: 'uuid',
             key: 'uuid',
-            render: uuid => <a>{uuid}</a>,
+            render: uuid => <p>{uuid}</p>,
         },
         {
             title: 'Action',
             key: 'action',
             dataIndex: 'uuid',
-            render: uuid => <Link href={uuid} />
-
-            //     <span>
-            //         {tags.map(tag => {
-            //             let color = tag.length > 5 ? 'geekblue' : 'green';
-            //             if (tag === 'loser') {
-            //                 color = 'volcano';
-            //             }
-            //             return (
-            //                 <Tag color={color} key={tag}>
-            //                     {tag.toUpperCase()}
-            //                 </Tag>
-            //             );
-            //         })}
-            //     </span>
-            // ),
+            render: uuid => <Link href={'/blog/room/' + uuid}>
+                <Tag color='green' >
+                    <a>View</a>
+                </Tag>
+            </Link>
         }
     ];
 

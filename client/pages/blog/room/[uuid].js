@@ -8,15 +8,16 @@ class MyPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            uuid: props.router.query.uuid,
+            uuid: props.router.query.asPath,
             messages: []
         };
     }
 
     componentDidMount() {
-        SocketConnection.connect();
-        this.subscription = SocketConnection.subscribe(`room:${this.state.uuid}`, this.handleMessageAdd);
-        this.fetchMessages();
+        console.log(this.props.router);
+        // SocketConnection.connect();
+        // this.subscription = SocketConnection.subscribe(`room:${this.state.uuid}`, this.handleMessageAdd);
+        // this.fetchMessages();
     }
 
     componentWillUnmount() {

@@ -5,6 +5,7 @@ import MyLayout from '~/components/blog/layout/index'
 import RoomsList from '~/components/blog/room/RoomsList'
 import { ROOM_FETCH, ROOM_CREATE } from '~/actions';
 import { Form, Input, Button, Icon, notification } from 'antd';
+import _ from 'lodash';
 
 class MyPage extends Component {
     constructor(props) {
@@ -17,6 +18,7 @@ class MyPage extends Component {
     }
 
     componentDidMount() {
+        this.setState({ username: localStorage.getItem("username") })
         this.fetchRooms();
     }
 
@@ -34,7 +36,6 @@ class MyPage extends Component {
 
     handleRoomCreate = async () => {
         if (!this.state.username) return
-        localStorage.setItem("username", this.state.username);
         this.setState({ loading: true })
         try {
             let room = await ROOM_CREATE()
@@ -55,6 +56,7 @@ class MyPage extends Component {
         this.setState({
             [name]: value
         })
+        if (name === "username" && !_.isEmpty(value)) localStorage.setItem("username", value);
     }
 
     render() {
